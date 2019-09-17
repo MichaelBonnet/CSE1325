@@ -9,7 +9,7 @@ int main(int argc, char const *argv[])
 {
 	int choice;
 
-	Average average(0, 0);
+	Average average(0, 0); // maybe?
 
 	while (choice != 0)
 	{
@@ -36,8 +36,9 @@ int main(int argc, char const *argv[])
 			}
 				else if (choice == 9)
 				{
-					average._sum = 0;
-					average._values = 0;
+					// average._sum = 0; //how to access?
+					// average._values = 0; //how to access?
+					cout << "zeroing machine broke, check back later";
 				} 
 					else if (choice == 0)
 					{

@@ -11,10 +11,10 @@ class Average
 		int _values;
 
 	public:
-		Average (double sum, int values);
-		friend std::ostream& operator<<(std::ostream& ost, Average& average);
-		friend std::istream& operator>>(std::istream& ist, Average& average);
-		Average& operator+=(double value);
+		Average (double sum, int values); // maybe removing parameters will help since there seems to be disagreement
+		friend std::ostream& operator<<(std::ostream& ost, Average& average); // tried removing const because "read-only"
+		friend std::istream& operator>>(std::istream& ist, Average& average); // tried removing const because "read-only"
+		Average& operator+=(double value); // --ahhh gotta relate it to average-- std onto average?
 };
 
 #endif
