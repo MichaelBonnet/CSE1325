@@ -1,3 +1,5 @@
+// real talk, thought this was due the following thursday.
+
 #include average.h
 #include <string>
 #include <iostream>
@@ -14,7 +16,7 @@ int main(int argc, char const *argv[])
 		cout << "    =========================";
 		cout << "    Merely Average Calculator";
 		cout << "    =========================";
-		cout << "The current average is " << average.operator<<();
+		cout << "The current average is " << average; // think I figured it out
 		cout << " ";
 		cout << "1 - Enter a new value";
 		cout << "2 - Auto enter a random value";
@@ -25,8 +27,22 @@ int main(int argc, char const *argv[])
 		cin >> choice;
 		if (choice == 1)
 		{
-			average.operator>>
+			cin >> average;
 		}
+			else if (choice == 2)
+			{
+				double randy; // no idea how to generate a random double between 0.0 and 100.0 inclusive
+				average += randy; // think I figured it out
+			}
+				else if (choice == 9)
+				{
+					average._sum = 0;
+					average._values = 0;
+				}
+					else if (choice == 0)
+					{
+						break;
+					}
 	}
 	return 0;
 }
