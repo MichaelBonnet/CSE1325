@@ -1,7 +1,7 @@
 #include "average.h"
 
 Average::Average(): _sum{0}, _values{0} {};
-std::ostream& operator<<(ostream& ost, Average& average)
+std::ostream& operator<<(std::ostream& ost, Average& average)
 {
 	if (average._values == 0)
 	{
@@ -15,7 +15,7 @@ std::ostream& operator<<(ostream& ost, Average& average)
 	return ost;
 }
 		
-std::istream& operator>>(istream& ist, Average& average)
+std::istream& operator>>(std::istream& ist, Average& average)
 {
 	int inc = 1;
 	double val;
@@ -30,3 +30,5 @@ Average& operator+=(double value)
 	_sum += value;
 	_values += inc;
 }
+
+// do I need a destructor?

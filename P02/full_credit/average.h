@@ -12,9 +12,9 @@ class Average
 
 	public:
 		Average (double sum, int values);
-		friend std::ostream& operator<<(ostream& ost, Average& average);
-		friend std::istream& operator>>(istream& ist, Average& average);
+		friend std::ostream& operator<<(std::ostream& ost, Average& average);
+		friend std::istream& operator>>(std::istream& ist, Average& average);
 		Average& operator+=(double value);
-}
+};
 
 #endif
