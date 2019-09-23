@@ -8,11 +8,10 @@ class Train
 		vector<Coach*> _coaches;
 
 	public:
-		add_locomotive(Locomotive& locomotive);
-		add_coach(Coach& coach);
+		void add_locomotive(Locomotive& locomotive);
+		void add_coach(Coach& coach);
 		double speed(double minutes);
 		string to_art();
-
 }
 
 #endif

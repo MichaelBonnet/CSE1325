@@ -4,10 +4,11 @@
 class Locomotive : public Stock
 {
 	private:
-		Locomotive();
+		double _power;
 
 	public:
-
+		Locomotive(double weight, double power);
+		double power();
 }
 
 #endif
