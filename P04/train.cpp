@@ -8,8 +8,17 @@ class Train
 		vector<Coach*> _coaches;
 
 	public:
-		void add_locomotive(Locomotive& locomotive);
-		void add_coach(Coach& coach);
-		double speed(double minutes);
+		void add_locomotive(Locomotive& locomotive)
+		{
+			_locomotives.push_back(&locomotive);
+		}
+		void add_coach(Coach& coach)
+		{
+			 _coaches.push_back(&coach);
+		}
+		double speed(double minutes)
+		{
+			return std::sqrt(2*power*(minutes*60)/weight);
+		}
 		string to_art();
 }

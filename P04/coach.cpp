@@ -8,6 +8,12 @@ class Coach : public Stock
 
 	public:
 		Coach(double weight);
-		void add_passengers(int passengers);
-		double weight();
+		void add_passengers(int passengers)
+		{
+			_passengers += passengers;
+		}
+		double weight()
+		{
+			return _weight + (_passengers * 60);
+		}
 }
