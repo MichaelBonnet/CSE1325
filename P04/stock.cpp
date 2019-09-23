@@ -16,5 +16,26 @@ virtual double Stock::weight()
 
 std::string Stock::ascii_art(int row) // returns the indicated row of text in the ASCII art representation of the carriage.
 {
-	// code
+	switch(row)
+	{
+		case 1:
+			// stuff
+			break;
+		case 2:
+			// stuff
+			break;
+		case 3:
+			// stuff
+			break;
+		case 4:
+			// stuff
+			break;
+		case 5:
+			// stuff
+			break;
+		case 6:
+			// stuff
+			break;
+	}
+
 }

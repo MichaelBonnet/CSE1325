@@ -11,10 +11,10 @@ DONE train.h
 =: .cpp files :=
 ================
 
-TODO coach.cpp
-TODO locomotive.cpp
-TODO stock.cpp
-TODO train.cpp
+DONE coach.cpp
+DONE locomotive.cpp
+DONE stock.cpp
+DONE train.cpp
 
 TODO main.cpp
 DONE Makefile
