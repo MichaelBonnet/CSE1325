@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "train.h"
 
 void Train::add_locomotive(Locomotive& locomotive)
