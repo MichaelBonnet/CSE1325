@@ -12,10 +12,10 @@ train.o: train.cpp train.h
 stock.o: stock.cpp stock.h
 	$(CXX) $(CXXFLAGS) -c stock.cpp -o stock.o
 
-coach.o: coach.cpp coach.h
+coach.o: coach.cpp coach.h stock.h
 	$(CXX) $(CXXFLAGS) -c coach.cpp -o coach.o
 
-locomotive.o: locomotive.cpp locomotive.h
+locomotive.o: locomotive.cpp locomotive.h stock.h
 	$(CXX) $(CXXFLAGS) -c locomotive.cpp -o locomotive.o
 
 clean:

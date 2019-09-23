@@ -11,7 +11,7 @@ Stock::Stock(double weight) : _weight{weight} { }
 //  returns the total weight of the carriage, which is the empty weight plus the weight of any cargo, e.g., human passengers.
 virtual double Stock::weight() 
 {                              
-	// code
+	return _weight;
 }
 
 std::string Stock::ascii_art(int row) // returns the indicated row of text in the ASCII art representation of the carriage.
