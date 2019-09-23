@@ -1,10 +1,10 @@
 #ifndef __COACH_H
 #define __COACH_H
 
-class Coach
+class Coach : public Stock
 {
 	private:
-		Coach();
+		int _passengers;
 
 	public:
 
