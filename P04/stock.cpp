@@ -1,22 +1,20 @@
 #include <iostream>
+#include <cmath>
 #include "stock.h"
 
-Stock::Stock()
-{
+// initialization list to set _weight to NaN. 2 is outside range of arcsin so it returns nan.
+Stock::Stock() : _weight{asin(2);} { }
+
+// initialization list to set _weight to parameter
+Stock::Stock(double weight) : _weight{weight} { } 
+
+//  returns the total weight of the carriage, which is the empty weight plus the weight of any cargo, e.g., human passengers.
+virtual double Stock::weight() 
+{                              
 	// code
 }
 
-Stock::Stock(double weight);
-{
-	// code
-}
-
-virtual double Stock::weight()
-{
-	// code
-}
-
-std::string Stock::ascii_art(int row)
+std::string Stock::ascii_art(int row) // returns the indicated row of text in the ASCII art representation of the carriage.
 {
 	// code
 }
