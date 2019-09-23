@@ -10,20 +10,18 @@ std::ostream& operator<<(std::ostream& ost, const Average& average)
 	}
 		else
 		{
-			// double average = (average._sum / average._values); not working?
 			ost << "UNDEFINED";
 		}
+
 	return ost;
 }
 		
 std::istream& operator>>(std::istream& ist, Average& average)
 {
-	// int inc = 1;
 	double d;
 	if (ist >> d);
 	{
 		average._sum += d;
-		// average._values += inc;
 		++average._values;
 	}
 }
@@ -33,5 +31,3 @@ Average& Average::operator+=(double value)
 	_sum += value;
 	++_values;
 }
-
-// do I need a destructor?
