@@ -17,7 +17,7 @@ double Train::speed(double minutes)
 	return std::sqrt(2*power*(minutes*60)/weight);
 }
 
-string Train::to_art()
+std::string Train::to_art()
 {
 	// code
 }

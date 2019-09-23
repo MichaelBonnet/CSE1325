@@ -22,7 +22,7 @@ class Train
 		double speed(double minutes);
 
 		//  returns a complete string representation of the train as ASCII art.
-		string to_art();
+		std::string to_art();
 }
 
 #endif

@@ -1,0 +1,20 @@
+==============
+=: .h files :=
+==============
+
+DONE coach.h
+DONE locomotive.h
+DONE stock.h
+DONE train.h
+
+================
+=: .cpp files :=
+================
+
+TODO coach.cpp
+TODO locomotive.cpp
+TODO stock.cpp
+TODO train.cpp
+
+TODO main.cpp
+DONE Makefile
