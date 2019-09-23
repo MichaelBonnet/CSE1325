@@ -1,15 +1,12 @@
 #include <iostream>
 #include "locomotive.h"
 
-class Locomotive : public Stock
+Locomotive::Locomotive(double weight, double power)
 {
-	private:
-		double _power;
+	// code
+}
 
-	public:
-		Locomotive(double weight, double power);
-		double power()
-		{
-			return _power;
-		}
+double Locomotive::power()
+{
+	return _power;
 }

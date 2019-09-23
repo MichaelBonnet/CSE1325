@@ -1,17 +1,22 @@
 #include <iostream>
 #include "stock.h"
 
-class Stock
+Stock::Stock()
 {
-	private:
-		double _weight;
+	// code
+}
 
-	protected:
-		vector<string> _art;
+Stock::Stock(double weight);
+{
+	// code
+}
 
-	public:
-		Stock();
-		Stock(double weight);
-		virtual double weight();
-		std::string ascii_art(int row);
+virtual double Stock::weight()
+{
+	// code
+}
+
+std::string Stock::ascii_art(int row)
+{
+	// code
 }
