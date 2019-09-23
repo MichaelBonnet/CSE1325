@@ -37,5 +37,4 @@ std::string Stock::ascii_art(int row) // returns the indicated row of text in th
 			// stuff
 			break;
 	}
-
 }
