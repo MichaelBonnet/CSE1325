@@ -1,15 +1,15 @@
-==============
-=: .h files :=
-==============
+============
+= .h files =
+============
 
 DONE coach.h
 DONE locomotive.h
 DONE stock.h
 DONE train.h
 
-================
-=: .cpp files :=
-================
+==============
+= .cpp files =
+==============
 
 DONE coach.cpp
 DONE locomotive.cpp
