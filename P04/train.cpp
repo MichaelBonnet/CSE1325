@@ -20,5 +20,16 @@ double Train::speed(double minutes)
 
 std::string Train::to_art()
 {
-	
+	for (int r = 0; r < 6; r++)
+	{
+		for (int i = 0; i < _locomotives.size(); i++)
+		{
+			cout << _locomotives[i].ascii_art[r];
+		}
+		for (int j = 0; j < _coaches.size(); j++)
+		{
+			cout << _coaches[i].ascii_art[r];
+		}
+		cout << endl;
+	}
 }
