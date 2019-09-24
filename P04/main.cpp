@@ -19,9 +19,9 @@ int main(int argc, char const *argv[])
 
 		std::cout << train.to_art();
 
-		cout << setw(11) << "| Minutes  " << setw(11) << "|    1     " << setw(11) << "|    5     " << setw(11) << "|    10   |" << endl;
-    	cout << setw(11) << "|----------" << setw(11) << "|----------" << setw(11) << "|----------" << setw(11) << "|---------|" << endl;
-    	cout << setw(11) << "|   km/h   " << setw(15) << train.speed(1) << setw(15) << train.speed(5) << train.speed(10) << endl;
+		std::cout << std::setw(11) << "| Minutes  " << std::setw(11) << "|    1     " << std::setw(11) << "|    5     " << std::setw(11) << "|    10   |" << endl;
+    	std::cout << std::setw(11) << "|----------" << std::setw(11) << "|----------" << std::setw(11) << "|----------" << std::setw(11) << "|---------|" << endl;
+    	std::cout << std::setw(11) << "|   km/h   " << std::setw(15) << train.speed(1) << std::setw(15) << train.speed(5) << train.speed(10) << endl;
 
 		std::cout << "1 - Add a locomotive" << endl;
 		std::cout << "2 - Add a coach" << endl;
