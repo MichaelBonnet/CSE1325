@@ -37,7 +37,7 @@ std::string Train::to_art()
 {
 	for (int r = 0; r < 6; r++)
 	{
-		for (int i = 0; i < Mic_locomotives.size(); i++)
+		for (int i = 0; i < _locomotives.size(); i++)
 		{
 			std::cout << _locomotives[i]->ascii_art(r);
 		}
