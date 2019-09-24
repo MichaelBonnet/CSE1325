@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <string>
 #include "train.h"
 
 void Train::add_locomotive(Locomotive& locomotive)
@@ -19,5 +20,5 @@ double Train::speed(double minutes)
 
 std::string Train::to_art()
 {
-	// code
+	
 }

@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cmath>
+#include <string>
 #include "train.h"
 #include "stock.h"
 #include "locomotive.h"

@@ -1,9 +1,22 @@
 #include <iostream>
+#include <cmath>
+#include <string>
 #include "coach.h"
 #include "stock.h"
 
 // need to figure out delegation to the base constructor.
-Coach::Coach(double weight) : Stock{weight} { }
+Coach::Coach(double weight) : Stock{weight} 
+{
+	_art = 
+	{ // Coach
+		"               ",
+		" ______________",
+		" | [] [] [] []|",
+		" |            |",
+		"='OO--------OO'",
+		"###############",
+	};
+}
 
 void Coach::add_passengers(int passengers)
 {
