@@ -18,7 +18,7 @@ int main(int argc, char const *argv[])
 		std::cout << "   The CSE1325 Express   " << std::endl;
 		std::cout << "=========================" << std::endl;
 
-		// std::cout << train.to_art() << std::endl;
+		// std::cout << train.to_art();
 
 		std::cout << std::setw(11) << "| Minutes  " << std::setw(11) << "|    1     " << std::setw(11) << "|    5     " << std::setw(11) << "|    10   |" << std::endl;
     	std::cout << std::setw(11) << "|----------" << std::setw(11) << "|----------" << std::setw(11) << "|----------" << std::setw(11) << "|---------|" << std::endl;
