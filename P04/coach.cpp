@@ -1,11 +1,12 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <vector>
 #include "coach.h"
 #include "stock.h"
 
 // need to figure out delegation to the base constructor.
-Coach::Coach(double weight) : Stock{weight} 
+Coach::Coach(double weight) : Stock(18000) 
 {
 	_art = 
 	{ // Coach
@@ -21,10 +22,10 @@ Coach::Coach(double weight) : Stock{weight}
 void Coach::add_passengers(int passengers)
 {
 	_passengers += passengers;
-	if ( _passengers > 120 ) { cout << "Exception: Too many passengers (more than 120). " << endl; }
+	if ( _passengers > 120 ) { std::cout << "Exception: Too many passengers (more than 120). " << std::endl; }
 }
 
-virtual double Coach::weight()
+double Coach::weight()
 {
-	return _weight + (_passengers * 60);
+	return weight() + (_passengers * 60);
 }

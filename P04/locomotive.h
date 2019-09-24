@@ -1,6 +1,11 @@
 #ifndef __LOCOMOTIVE_H
 #define __LOCOMOTIVE_H
 
+#include <vector>
+#include <string>
+#include <iostream>
+#include "stock.h"
+
 class Locomotive : public Stock
 {
 	private:
@@ -13,6 +18,6 @@ class Locomotive : public Stock
 
 		// returns _power (i.e., a "getter").
 		double power();
-}
+};
 
 #endif

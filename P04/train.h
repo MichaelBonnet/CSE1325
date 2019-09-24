@@ -1,14 +1,21 @@
 #ifndef __TRAIN_H
 #define __TRAIN_H
 
+#include <vector>
+#include <string>
+#include <iostream>
+#include "stock.h"
+#include "coach.h"
+#include "locomotive.h"
+
 class Train
 {
 	private:
 		// a vector of pointers to instances of Locomotive.
-		vector<Locomotive*> _locomotives;
+		std::vector<Locomotive*> _locomotives;
 
 		// a vector of pointers to instances of Coach.
-		vector<Coach*> _coaches;
+		std::vector<Coach*> _coaches;
 
 	public:
 		// pushes a pointer to the parameter onto _locomotives.
@@ -23,6 +30,6 @@ class Train
 
 		//  returns a complete string representation of the train as ASCII art.
 		std::string to_art();
-}
+};
 
 #endif

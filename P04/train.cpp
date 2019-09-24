@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <vector>
 #include "train.h"
 
 void Train::add_locomotive(Locomotive& locomotive)
@@ -15,7 +16,25 @@ void Train::add_coach(Coach& coach)
 
 double Train::speed(double minutes)
 {
+	double weight, power;
+
+	for (int i = 0; i < _locomotives.size(); i++)
+	{
+		weight += _locomotives[i]->weight();
+	}
+
+	for (int k = 0; k < _coaches.size(); k++)
+	{
+		weight += _coaches[k]->weight();
+	}
+
+	for (int j = 0; j < _locomotives.size(); j++)
+	{
+		power += _locomotives[j]->power();
+	}
+
 	return std::sqrt(2*power*(minutes*60)/weight);
+
 }
 
 std::string Train::to_art()
@@ -24,12 +43,12 @@ std::string Train::to_art()
 	{
 		for (int i = 0; i < _locomotives.size(); i++)
 		{
-			cout << _locomotives[i].ascii_art[r];
+			std::cout << _locomotives[i]->ascii_art(r);
 		}
 		for (int j = 0; j < _coaches.size(); j++)
 		{
-			cout << _coaches[i].ascii_art[r];
+			std::cout << _coaches[j]->ascii_art(r);
 		}
-		cout << endl;
+		std::cout << std::endl;
 	}
 }

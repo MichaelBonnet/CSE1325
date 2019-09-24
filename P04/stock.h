@@ -1,6 +1,10 @@
 #ifndef __STOCK_H
 #define __STOCK_H
 
+#include <vector>
+#include <string>
+#include <iostream>
+
 class Stock
 {
 	private:
@@ -10,7 +14,7 @@ class Stock
 
 	protected:
 		// vector of strings forming ASCII art[#]_ that visually represents a derived carriage
-		vector<string> _art;
+		std::vector<std::string> _art;
 
 	public:
 		// initializes _weight to NAN ("not a number") from <cmath>.
@@ -24,6 +28,6 @@ class Stock
 
 		// returns the indicated row of text in the ASCII art representation of the carriage.
 		std::string ascii_art(int row);
-}
+};
 
 #endif

@@ -1,6 +1,11 @@
 #ifndef __COACH_H
 #define __COACH_H
 
+#include <vector>
+#include <string>
+#include <iostream>
+#include "stock.h"
+
 class Coach : public Stock
 {
 	private:
@@ -17,6 +22,6 @@ class Coach : public Stock
 		// overrides Stock::weight(), returning the empty weight of the carriage plus the weight of the
 		// passengers. Each passenger weighs 60 kilograms.
 		double weight();
-}
+};
 
 #endif
