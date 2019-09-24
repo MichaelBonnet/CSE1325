@@ -9,7 +9,7 @@
 Coach::Coach(double weight) : Stock(18000) 
 {
 	_art = 
-	{ // Coach
+	{
 		"               ",
 		" ______________",
 		" | [] [] [] []|",
