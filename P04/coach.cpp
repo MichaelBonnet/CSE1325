@@ -27,5 +27,5 @@ void Coach::add_passengers(int passengers)
 
 double Coach::weight()
 {
-	return weight() + (_passengers * 60);
+	return Stock::weight() + (_passengers * 60);
 }

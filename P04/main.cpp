@@ -44,11 +44,11 @@ Command? )";
         	}
         		else if (command == 1)
         		{
-            		train.add_locomotive( *(new Locomotive(80000, 13500)) ); // ?
+            		train.add_locomotive( *(new Locomotive{80000, 13500}) ); // ?
         		}
         			else if (command == 2)
         			{
-            			train.add_coach( *(new Coach(18000)) ); // ?
+            			train.add_coach( *(new Coach{18000}) ); // ?
         			}
         				else if (command == 9)
         				{
