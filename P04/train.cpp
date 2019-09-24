@@ -21,19 +21,15 @@ double Train::speed(double minutes)
 	for (int i = 0; i < _locomotives.size(); i++)
 	{
 		weight += _locomotives[i]->weight();
+		power += _locomotives[i]->power();
 	}
 
-	for (int k = 0; k < _coaches.size(); k++)
+	for (int j = 0; j < _coaches.size(); j++)
 	{
-		weight += _coaches[k]->weight();
+		weight += _coaches[j]->weight();
 	}
 
-	for (int j = 0; j < _locomotives.size(); j++)
-	{
-		power += _locomotives[j]->power();
-	}
-
-	return std::sqrt(2*power*(minutes*60)/weight);
+	return std::sqrt( 2 * power * ( minutes * 60 ) / weight );
 
 }
 
@@ -41,7 +37,7 @@ std::string Train::to_art()
 {
 	for (int r = 0; r < 6; r++)
 	{
-		for (int i = 0; i < _locomotives.size(); i++)
+		for (int i = 0; i < Mic_locomotives.size(); i++)
 		{
 			std::cout << _locomotives[i]->ascii_art(r);
 		}
