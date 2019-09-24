@@ -18,18 +18,19 @@ int main(int argc, char const *argv[])
 		std::cout << "   The CSE1325 Express   " << std::endl;
 		std::cout << "=========================" << std::endl;
 
-		std::cout << train.to_art();
+		// std::cout << train.to_art() << std::endl;
 
 		std::cout << std::setw(11) << "| Minutes  " << std::setw(11) << "|    1     " << std::setw(11) << "|    5     " << std::setw(11) << "|    10   |" << std::endl;
     	std::cout << std::setw(11) << "|----------" << std::setw(11) << "|----------" << std::setw(11) << "|----------" << std::setw(11) << "|---------|" << std::endl;
     	std::cout << std::setw(11) << "|   km/h   " << std::setw(15) << train.speed(1) << std::setw(15) << train.speed(5) << train.speed(10) << std::endl;
 
-		std::cout << "1 - Add a locomotive" << std::endl;
-		std::cout << "2 - Add a coach" << std::endl;
-		std::cout << "9 - Clear the train" << std::endl;
-		std::cout << "0 - Exit" << std::endl;
-		std::cout << " " << std::endl;
-		std::cout << "Command?" << std::endl;
+std::cout << R"(
+1 - Add a locomotive
+2 - Add a coach
+9 - Clear the train
+0 - Exit
+
+Command? )";
 
 		std::string s;
         std::getline(std::cin, s);
