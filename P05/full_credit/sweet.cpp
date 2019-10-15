@@ -4,12 +4,12 @@
 Sweet::Sweet( std::string name, double price )
     : _name{ name }, _price{ price } { }
 
-std::string Sweet::name() const 
+std::string Sweet::name() const
 {
 	return _name;
 }
 
-double Sweet::price() const 
+double Sweet::price() const
 {
 	return _price;
 }

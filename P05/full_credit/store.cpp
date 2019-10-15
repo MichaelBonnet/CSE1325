@@ -27,6 +27,6 @@ int Store::num_sweets()
 
 const Sweet& Store::sweet( int number ) 
 {
-	return _sweets[ number ];
+	return _sweets[number];
 }
 

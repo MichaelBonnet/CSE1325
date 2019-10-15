@@ -1,89 +1,82 @@
 #include "mainwin.h"
+#include "entrydialog.h"
 
-Mainwin::Mainwin() : Mainwin{ *( new Store ) } { }
-
-Mainwin::Mainwin( Store& store ) : _store{ &store }
+Mainwin::Mainwin() : Mainwin{*(new Store)} { }
+Mainwin::Mainwin(Store& store) : _store{&store}
 {
-
     // /////////////////
     // G U I   S E T U P
     // /////////////////
-
-    set_default_size(400, 400);
+	set_default_size(400, 400);
     set_title("Mav's Ultimate Sweet Shop");
 
     // Set up a vertical box to hold the main window elements
+	Gtk::Box *vbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL));
+  	add(*vbox);
 
-    Gtk::Box vbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
-    add(vbox);
 
     // ///////
     // M E N U
     // Add and configure a menu bar as the top item in the vertical box
- 
-    // Create menu bar
-    Gtk::MenuBar menubar = Gtk::manage(new Gtk::MenuBar());
-    vbox->pack_start(menubar, Gtk::PACK_SHRINK, 0);
+	Gtk::MenuBar *main_menu_bar = Gtk::manage(new Gtk::MenuBar());
+    vbox->pack_start(*main_menu_bar, Gtk::PACK_SHRINK, 0);
 
-    // Create and manage File dropdown
-    Gtk::MenuItem menuitem_file = Gtk::manage(new Gtk::MenuItem("File", true));
-    menubar->append(menuitem_file);
-    Gtk::Menu filemenu = Gtk::manage(new Gtk::Menu());
-    menuitem_file->set_submenu(filemenu);
 
-    // Create quit option
-    Gtk::MenuItem menuitem_quit = Gtk::manage(new Gtk::MenuItem("Quit", true));
-    menuitem_quit->signal_activate().connect( [this] { this->on_quit_click(); } );
-    filemenu->append(menuitem_quit);
+ 	/////////////
+ 	// FILE STUFF
+    // create file submenu
+ 	Gtk::MenuItem *menuitem_file = Gtk::manage(new Gtk::MenuItem("_File", true));
+    main_menu_bar->append(*menuitem_file);
+    Gtk::Menu *filemenu = Gtk::manage(new Gtk::Menu());
+    menuitem_file->set_submenu(*filemenu);
 
-    // Create about option
-    Gtk::MenuItem menuitem_about = Gtk::manage(new Gtk::MenuItem("About", true));
-    menuitem_about->signal_activate().connect( [this] { this->on_about_click(); } );
-    filemenu->append(menuitem_about);
+	// create quit and new store options
+	Gtk::MenuItem *menuitem_quit = Gtk::manage(new Gtk::MenuItem("_Quit", true));
+	Gtk::MenuItem *menuitem_new_store = Gtk::manage(new Gtk::MenuItem("_New Store", true));
 
-    // Create new store option
-    Gtk::MenuItem menuitem_new_store = Gtk::manage(new Gtk::MenuItem("New Store", true));
-    menuitem_new_store->signal_activate().connect( [this] { this->on_new_store_click(); } );
-    filemenu->append(menuitem_new_store);
+	// Link options and functions
+    menuitem_quit->signal_activate().connect([this] {this->on_quit_click();});
+    menuitem_new_store->signal_activate().connect([this] {this->on_new_store_click();});
 
-    
-	// SWEETS STUFF
-    // Create sweets submenu
-    Gtk::MenuItem menuitem_sweets = Gtk::manage(new Gtk::MenuItem("Sweets", true));
-    menubar->append(menuitem_sweets);
-    Gtk::Menu sweetsmenu = Gtk::manage(new Gtk::Menu());
-    menuitem_sweets->set_submenu(sweetsmenu);
+    // Link menu items
+    filemenu->append(*menuitem_quit);
+    filemenu->append(*menuitem_new_store);
 
-    // Create add sweet option
-    Gtk::ToolButton add_sweet_button = Gtk::manage(new Gtk::ToolButton("Add Sweets", true));
-    menuitem_add_sweet->signal_activate().connect( [this] { this->on_add_sweet_click(); } );
-    // sweetsmenu->append(menuitem_add_sweet);
 
-    // Create list sweets option
-    Gtk::ToolButton list_sweets_button = Gtk::manage(new Gtk::ToolButton("List Sweets", true));
+    ///////////////
+    // SWEETS STUFF
+    // create sweets submenu
+    Gtk::MenuItem *menuitem_sweets = Gtk::manage(new Gtk::MenuItem("_Sweets", true));
+    main_menu_bar->append(*menuitem_sweets);
+    Gtk::Menu *sweetsmenu = Gtk::manage(new Gtk::Menu());
+    menuitem_sweets->set_submenu(*sweetsmenu);
+
+	// Create add sweet & list sweet options
+	Gtk::MenuItem *menuitem_add_sweet = Gtk::manage(new Gtk::MenuItem("_Add", true));
+	Gtk::MenuItem *menuitem_list_sweets = Gtk::manage(new Gtk::MenuItem("List Sweets", true));
+
+	// Link options and functions
+    menuitem_add_sweet->signal_activate().connect([this] { this->on_add_sweet_click(); });
     menuitem_list_sweets->signal_activate().connect( [this] { this->on_list_sweets_click(); } );
-    // sweetsmenu->append(menuitem_list_sweets);
+
+    // Link menu items
+    sweetsmenu->append(*menuitem_add_sweet);
+    sweetsmenu->append(*menuitem_list_sweets);
 
 
-    // ORDERS STUFF
-    // Create orders submenu
-    Gtk::MenuItem menuitem_orders = Gtk::manage(new Gtk::MenuItem("Orders", true));
-    menubar->append(menuitem_orders);
-    Gtk::Menu ordersmenu = Gtk::manage(new Gtk::Menu());
-    menuitem_orders->set_submenu(ordersmenu);
+    /////////////
+    // HELP STUFF
+    // Create help submenu
+    Gtk::MenuItem *menuitem_help = Gtk::manage(new Gtk::MenuItem("_Help", true));
+    main_menu_bar->append(*menuitem_help);
+    Gtk::Menu *helpmenu = Gtk::manage(new Gtk::Menu());
+    menuitem_help->set_submenu(*helpmenu);
 
-    // Create place order button
-    Gtk::ToolButton place_order_button = Gtk::manage(new Gtk::ToolButton("Place Order", true));
-    place_order_button->signal_activate().connect( [this] { this->on_place_order_click(); } );
-    ordersmenu->append(place_order_button);
+    // add about button
+    Gtk::MenuItem *menuitem_about = Gtk::manage(new Gtk::MenuItem("_About", true));
+    menuitem_about->signal_activate().connect([this] {this->on_about_click();});
+    helpmenu->append(*menuitem_about);
 
-    // Create list orders button
-    Gtk::ToolButton list_orders_button = Gtk::manage(new Gtk::ToolButton("List Orders", true));
-    place_order_button->signal_activate().connect( [this] { this->on_list_orders_click(); } );
-    ordersmenu->append(list_orders_button);
-
-    //                 Gtk::Label data = 
-    //                 Gtk::Label msg = 
 
     // /////////////
     // T O O L B A R
@@ -103,53 +96,58 @@ Mainwin::Mainwin( Store& store ) : _store{ &store }
 
 
     // Make the vertical box and everything in it visible
-
-    vbox->show_all();
-
+ 	vbox->show_all();
 }
 
-Mainwin::reset_sensitivity()
+Mainwin::~Mainwin() { }
+
+// /////////////////
+// C A L L B A C K S
+// ///////////////// 
+
+
+void Mainwin::on_quit_click()
 {
-	// pass
+    close();
 }
 
-Mainwin::on_new_store_click()
+void Mainwin::on_new_store_click()
 {
-	_store = new Store();
+	_store = new Store(); // I feel like maybe this needs to be more complex
 }
 
-Mainwin::on_add_sweet_click()
+void Mainwin::on_add_sweet_click()
 {
-    std::string name;
-    double price;
+    // getting name of sweet from user
+    EntryDialog name_dialog{*this, "Enter Sweet Name"};
+    name_dialog.run();
+    std::string name = name_dialog.get_text();
 
-    EntryDialog ndialog{*this, "Create Name for Sweet: "};
-    ndialog.set_text("Enter a name");
-    ndialog.run();
+    // getting price of sweet from user
+    EntryDialog price_dialog{*this, "Enter Price of " + name};
+    price_dialog.run();
+    double price = std::stod(price_dialog.get_text());
+    _store->add( *(new Sweet(name, price)) );
 
-    name = ndialog.get_text();
-    EntryDialog pdialog{*this, "Create Price for " + name + ": "};
-    pdialog.set_text("Enter a price");
-    
-    pdialog.run();
+	// Gtk::MessageDialog* name_dialog = new Gtk::MessageDialog(*this, "Enter Sweet Name");
+	// name_dialog->show();
+	// Gtk::Entry* name_entry{new Gtk::Entry{}}; 
+	// name_dialog->get_content_area()->pack_start(*name_entry);
+	// name_entry->show();
+	// std::string name = name_entry->get_text();
+	// name_entry->hide();
+
+	// Gtk::MessageDialog* price_dialog = new Gtk::MessageDialog(*this, "Enter " + name + " Price");
+	// price_dialog->show();
+	// Gtk::Entry* price_entry{new Gtk::Entry{}}; 
+	// price_dialog->get_content_area()->pack_start(*price_entry);
+	// price_entry->show();
+	// double price = std::stod(price_entry->get_text());
+	// price_entry->hide();
+	// _store->add( *(new Sweet(name, price)) );
 }
 
-Mainwin::on_list_sweets_click()
-{
-	// pass
-}
-
-Mainwin::on_place_order_click()
-{
-	//
-}
-
-Mainwin::on_list_orders_click()
-{
-	// pass
-}
-
-Mainwin::on_about_click()
+void Mainwin::on_about_click()
 {
 	Gtk::MessageDialog{*this, R"(
 
@@ -157,7 +155,7 @@ Mainwin::on_about_click()
     =============================
 
     Manage a sweet shop filled with sweets.
-    Copyright 2019 George F. Rice
+    Copyright 2019 Michael A. Bonnet
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -175,21 +173,36 @@ Mainwin::on_about_click()
 	)"}.run();
 }
 
-Mainwin::on_quit_click()
-{
-	hide();
+
+void Mainwin::on_list_sweets_click() // cant figure out how to use overloaded operator
+{                                    // but lord help me this works.
+	std::string sweets_list;
+	for (int i = 0; i < _store->num_sweets(); i++)
+	{
+		Sweet sweet1 = _store->sweet(i);
+		sweets_list += sweet1.name() + " ";
+		sweets_list += std::to_string(sweet1.price());
+		sweets_list += "\n";
+	}
+	Gtk::MessageDialog{*this, sweets_list}.run();
 }
 
-Mainwin::~Mainwin() { }
+// =====================================
 
-// /////////////////
-// C A L L B A C K S
-// /////////////////
+    ///////////////
+    // ORDERS STUFF
+    // Create orders submenu
+    // Gtk::MenuItem menuitem_orders = Gtk::manage(new Gtk::MenuItem("Orders", true));
+    // main_menu_bar->append(menuitem_orders);
+    // Gtk::Menu ordersmenu = Gtk::manage(new Gtk::Menu());
+    // menuitem_orders->set_submenu(ordersmenu);
 
+    // Create place order button
+    // Gtk::ToolButton place_order_button = Gtk::manage(new Gtk::ToolButton("Place Order", true));
+    // place_order_button->signal_activate().connect( [this] { this->on_place_order_click(); } );
+    // ordersmenu->append(place_order_button);
 
-
-// /////////////////
-// U T I L I T I E S
-// /////////////////
-
-
+    // Create list orders button
+    // Gtk::ToolButton list_orders_button = Gtk::manage(new Gtk::ToolButton("List Orders", true));
+    // place_order_button->signal_activate().connect( [this] { this->on_list_orders_click(); } );
+    // ordersmenu->append(list_orders_button);
