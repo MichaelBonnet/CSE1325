@@ -193,6 +193,10 @@ void Mainwin::on_place_order_click()
     qty_prompt.set_width_chars(15);
     box.pack_start(qty_prompt);
 
+    Gtk::Label current_order{"Current Order\n"};
+    current_order.set_width_chars(15);
+    box.pack_start(current_order);
+
     Gtk::Entry entry;
     entry.set_max_length(50);
     box.pack_start(entry);
@@ -222,22 +226,31 @@ void Mainwin::on_place_order_click()
     dialog->add_button("Place Order", 2);
 
     dialog->show_all();
-    int result; // of the dialog (1 = OK)
-    bool fail = true;  // set to true if any data is invalid
+    // int result; // of the dialog (1 = OK)
+    // bool fail = true;  // set to true if any data is invalid
     
     Order order;
-    while (fail) 
+    std::string current_order_string;
+    while (true) 
     {
-        result = dialog->run();
+        std::ostringstream oss;
+        oss << order;
+        current_order.set_text(oss.str());
+        int result = dialog->run();
         if (result == 0)
         {
+            msg->set_text("You cancelled the order");
             delete dialog;
             // dialog->close();
-            // return;
+            return;
         }
         if (result == 1)
         {
-            order.add(std::stoi(entry.get_text()), _store->sweet(cbt.get_active_row_number()));
+            int quantity = std::stoi(entry.get_text());
+            order.add( quantity, _store->sweet(cbt.get_active_row_number()) );
+            oss << order;
+            // current_order_string += entry.get_text();
+            // current_order_string += _store->sweet(cbt.get_active_row_number()).name();
             // return;
         }
         if (result == 2)
@@ -246,9 +259,10 @@ void Mainwin::on_place_order_click()
             // delete order;
             delete dialog;
             // dialog->close();
-            // return;
+            return;
         }
     }
+    _store->add(order);
 }
 
 void Mainwin::on_list_orders_click()
@@ -260,12 +274,6 @@ void Mainwin::on_list_orders_click()
     }
     Gtk::MessageDialog{*this, orders_list.str()}.run();
 }
-
-
-
-
-
-
 
 // /////////////////
 // U T I L I T I E S
