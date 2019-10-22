@@ -144,7 +144,18 @@ void Mainwin::on_list_sweets_click()
         	sweets_list += std::to_string(tempsweet.price());
         	sweets_list += "\n";
     	}
-    	Gtk::MessageDialog{*this, sweets_list}.run();
+    Gtk::MessageDialog{*this, sweets_list}.run();
+
+    /* stringstream implementation
+    {
+        std::stringstream sweets_list;
+        for (int i = 0; i < _store->num_sweets(); i++)
+        {
+            sweets_list << _store->sweet(i) << std::endl;
+        }
+        Gtk::MessageDialog{*this, sweets_list.str()}.run();
+    }
+    */
 }
 
 void Mainwin::on_about_click() 
@@ -154,6 +165,8 @@ void Mainwin::on_about_click()
 
 void Mainwin::on_place_order_click()
 {
+    Order order;
+
     std::string name = "";
     double price = -1;
 	Gtk::Dialog *dialog = new Gtk::Dialog{"Create Order", *this};
@@ -165,9 +178,9 @@ void Mainwin::on_place_order_click()
     qty_prompt.set_width_chars(15);
     box.pack_start(qty_prompt);
 
-    Gtk::Entry e_name;
-    e_name.set_max_length(50);
-    box.pack_start(e_name);
+    Gtk::Entry entry;
+    entry.set_max_length(50);
+    box.pack_start(entry);
     dialog->get_vbox()->pack_start(box);
 
        // Price
@@ -183,14 +196,9 @@ void Mainwin::on_place_order_click()
     {
        	cbt.append( _store->sweet(i).name() );
     }
+
     cbt.set_active(1);
-	
-    cbt.signal_changed().connect([this, &cbt]
-    {
-        std::string s = "Dialog Row " + std::to_string(cbt.get_active_row_number())
-            + ": " + cbt.get_active_text();
-        Gtk::MessageDialog{*this, s}.run();
-    });
+    cbt.signal_changed().connect([this, &cbt] {});
 
     dialog->get_vbox()->pack_start(box_sweet);
     // Show dialog
@@ -201,18 +209,29 @@ void Mainwin::on_place_order_click()
     dialog->show_all();
     int result; // of the dialog (1 = OK)
     bool fail = true;  // set to true if any data is invalid
-
+    
+    Order new order;
     while (fail) 
     {
-        fail = false;  // optimist!
         result = dialog->run();
-        if (result != 1) 
-	       {
+        if (result == 0)
+        {
             delete dialog;
             return;
         }
+        if (result == 1)
+        {
+            order.add(std::stoi(e_quantity.get_text()), _store->sweet(cbt.get_active_row_number()));
+            return;
+        }
+        if (result == 2)
+        {
+            _store->add(order);
+            delete order;
+            dialog.close();
+            return;
+        }
     }
-    delete dialog;
 }
 
 void Mainwin::on_list_orders_click()
