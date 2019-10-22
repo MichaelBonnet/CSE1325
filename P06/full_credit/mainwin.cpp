@@ -24,16 +24,19 @@ Mainwin::Mainwin(Store& store) : _store{&store} {
 	Gtk::MenuBar *menubar = Gtk::manage(new Gtk::MenuBar());
     vbox->pack_start(*menubar, Gtk::PACK_SHRINK, 0);
 
- 	Gtk::MenuItem *menuitem_file = Gtk::manage(new Gtk::MenuItem("_File", true));
+ 	// File Menu
+    Gtk::MenuItem *menuitem_file = Gtk::manage(new Gtk::MenuItem("_File", true));
     menubar->append(*menuitem_file);
     Gtk::Menu *filemenu = Gtk::manage(new Gtk::Menu());
     menuitem_file->set_submenu(*filemenu);
 
-	Gtk::MenuItem *menuitem_quit = Gtk::manage(new Gtk::MenuItem("_Quit", true));
+	// File -> Quit Option
+    Gtk::MenuItem *menuitem_quit = Gtk::manage(new Gtk::MenuItem("_Quit", true));
     menuitem_quit->signal_activate().connect([this] {this->on_quit_click();});
     filemenu->append(*menuitem_quit);
 
-	Gtk::MenuItem *menuitem_new_store = Gtk::manage(new Gtk::MenuItem("_New Store", true));
+	// File -> New Store option
+    Gtk::MenuItem *menuitem_new_store = Gtk::manage(new Gtk::MenuItem("_New Store", true));
     menuitem_new_store->signal_activate().connect([this] {this->on_new_store_click();});
     filemenu->append(*menuitem_new_store);
 
@@ -43,12 +46,12 @@ Mainwin::Mainwin(Store& store) : _store{&store} {
     Gtk::Menu *sweetsmenu = Gtk::manage(new Gtk::Menu());
     menuitem_sweets->set_submenu(*sweetsmenu);
 
-	// Add Sweet option
+	// Sweets -> Add Sweet option
     Gtk::MenuItem *menuitem_add_sweet = Gtk::manage(new Gtk::MenuItem("_Add Sweets", true));
     menuitem_add_sweet->signal_activate().connect([this] {this->on_add_sweet_click();});
     sweetsmenu->append(*menuitem_add_sweet);
 	
-	// List Sweets option
+	// Sweets -> List Sweets option
     Gtk::MenuItem *menuitem_list_sweets = Gtk::manage(new Gtk::MenuItem("_List Sweets", true));
     menuitem_list_sweets->signal_activate().connect([this] {this->on_list_sweets_click();});
     sweetsmenu->append(*menuitem_list_sweets);
@@ -59,12 +62,12 @@ Mainwin::Mainwin(Store& store) : _store{&store} {
     Gtk::Menu *ordersmenu = Gtk::manage(new Gtk::Menu());
     menuitem_orders->set_submenu(*ordersmenu);
 
-	// Add Order
+	// Orders -> Add Order
     Gtk::MenuItem *menuitem_place_order = Gtk::manage(new Gtk::MenuItem("_Add Order", true));
     menuitem_place_order->signal_activate().connect([this] {this->on_place_order_click();});
     ordersmenu->append(*menuitem_place_order);
 	
-	// List Orders
+	// Orders -> List Orders
     Gtk::MenuItem *menuitem_list_orders = Gtk::manage(new Gtk::MenuItem("_List Orders", true));
     menuitem_list_orders->signal_activate().connect([this] {this->on_list_orders_click();});
     ordersmenu->append(*menuitem_list_orders);
@@ -75,7 +78,7 @@ Mainwin::Mainwin(Store& store) : _store{&store} {
     Gtk::Menu *helpmenu = Gtk::manage(new Gtk::Menu());
     menuitem_help->set_submenu(*helpmenu);
 
-	// Menu Option
+	// Help -> About Option
     Gtk::MenuItem *menuitem_About = Gtk::manage(new Gtk::MenuItem("_About", true));
     menuitem_About->signal_activate().connect([this] {this->on_about_click();});
     helpmenu->append(*menuitem_About);
@@ -121,17 +124,31 @@ void Mainwin::on_new_store_click()
 void Mainwin::on_add_sweet_click() 
 {
 	std::string name;
-    	double price;
+    double price;
 	EntryDialog ndialog{*this, "Create Name for Sweet: "};
-    	ndialog.set_text("Enter a name");
-    	ndialog.run();
+    ndialog.set_text("Enter a name");
+    ndialog.run();
 	name = ndialog.get_text();
 	EntryDialog pdialog{*this, "Create Price for " + name + ": "};
-    	pdialog.set_text("2.00");
+    pdialog.set_text("2.00");
 	pdialog.run();
 	price = std::stod(pdialog.get_text());
 	Sweet sweet{name, price};
 	_store->add(sweet);
+
+    // Old Implementation
+    /*
+    // getting name of sweet from user
+    EntryDialog name_dialog{*this, "Enter Sweet Name"};
+    name_dialog.run();
+    std::string name = name_dialog.get_text();
+
+    // getting price of sweet from user
+    EntryDialog price_dialog{*this, "Enter Price of " + name};
+    price_dialog.run();
+    double price = std::stod(price_dialog.get_text());
+    _store->add( *(new Sweet(name, price)) );
+    */
 }
 
 void Mainwin::on_list_sweets_click()
@@ -165,8 +182,6 @@ void Mainwin::on_about_click()
 
 void Mainwin::on_place_order_click()
 {
-    Order order;
-
     std::string name = "";
     double price = -1;
 	Gtk::Dialog *dialog = new Gtk::Dialog{"Create Order", *this};
@@ -198,7 +213,7 @@ void Mainwin::on_place_order_click()
     }
 
     cbt.set_active(1);
-    cbt.signal_changed().connect([this, &cbt] {});
+    // cbt.signal_changed().connect([this, &cbt] {});
 
     dialog->get_vbox()->pack_start(box_sweet);
     // Show dialog
@@ -210,26 +225,28 @@ void Mainwin::on_place_order_click()
     int result; // of the dialog (1 = OK)
     bool fail = true;  // set to true if any data is invalid
     
-    Order new order;
+    Order order;
     while (fail) 
     {
         result = dialog->run();
         if (result == 0)
         {
             delete dialog;
-            return;
+            // dialog->close();
+            // return;
         }
         if (result == 1)
         {
-            order.add(std::stoi(e_quantity.get_text()), _store->sweet(cbt.get_active_row_number()));
-            return;
+            order.add(std::stoi(entry.get_text()), _store->sweet(cbt.get_active_row_number()));
+            // return;
         }
         if (result == 2)
         {
             _store->add(order);
-            delete order;
-            dialog.close();
-            return;
+            // delete order;
+            delete dialog;
+            // dialog->close();
+            // return;
         }
     }
 }
