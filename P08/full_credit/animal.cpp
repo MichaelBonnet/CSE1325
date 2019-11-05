@@ -26,7 +26,7 @@ std::string Animal::to_string() const
 	int sex;
 	if (_gender == Gender::male)
 	{
-		sex = 0;
+		sex = 0; // awmen #0
 	}
 	else if (_gender == Gender::female)
 	{
