@@ -32,7 +32,7 @@ std::string Animal::to_string() const
 	{
 		sex = 1; // wamen #1
 	}
-	return _name + ", " + gender_to_string[sex] + ", Age " + std::to_string(_age); // add breed() and family() eventually
+	return _name + ", " + this->family() + ", " + gender_to_string[sex] + ", Age " + std::to_string(_age) + ", of breed " + this->breed(); // add breed() and family() eventually
 }
 
 

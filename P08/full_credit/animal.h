@@ -10,8 +10,8 @@ class Animal
 	public:
 		Animal(std::string name, Gender gender, int age);
 		~Animal();
-		virtual std::string family() = 0; // = 0
-		virtual std::string breed() = 0; // = 0
+		virtual std::string family() const = 0; // = 0
+		virtual std::string breed() const = 0; // = 0
 		std::string name() const;
 		Gender gender() const;
 		int age() const;

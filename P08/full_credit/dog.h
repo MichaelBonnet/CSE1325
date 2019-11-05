@@ -10,8 +10,8 @@ class Dog : public Animal
 	public:
 		Dog(Dog_breed breed, std::string name, Gender gender, int age);
 		~Dog();
-		std::string family() override;
-		std::string breed() override;
+		std::string family() const override;
+		std::string breed() const override;
 		
 	private:
 		Dog_breed _breed;
