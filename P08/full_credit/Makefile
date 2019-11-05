@@ -23,6 +23,8 @@ clean:
 	rm -f *.o *.gch a.out shelter
 
 # remake:
-# 	clean make
+# 	rm -f *.o *.gch a.out shelter
+# 	make
+
 # how the hell do I make a remake rule again, jfc
 

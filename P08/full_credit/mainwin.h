@@ -4,9 +4,9 @@
 #include <gtkmm.h>
 #include "shelter.h"
 
-const std::string VERSION{"0.1.0"};
+const std::string VERSION{"0.0.1"};
 
-const std::string APP_NAME{"edu.uta.cse1325.shelter.v0_1_0"};
+const std::string APP_NAME{"UTA_CSE1325_SHELTER_v0.0.1"};
 
 class Mainwin : public Gtk::Window
 {
