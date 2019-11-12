@@ -3,7 +3,13 @@
 #include <vector>
 #include <string>
 
-enum class Gender {male, female};
+enum class Gender {MALE, FEMALE};
+
+constexpr Gender genders[] = 
+{
+    Gender::MALE,
+    Gender::FEMALE,
+};
 
 const std::vector<std::string> gender_to_string = {"Male", "Female"}; // change it up
 

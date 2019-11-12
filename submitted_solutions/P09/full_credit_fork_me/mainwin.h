@@ -19,6 +19,8 @@ class Mainwin : public Gtk::Window
 		void on_quit_click();
 		void on_new_animal_click();
 		void on_list_animals_click();
+		void on_new_client_click();
+		void on_list_clients_click();
 
 	private:
 		Shelter *shelter;
@@ -26,6 +28,3 @@ class Mainwin : public Gtk::Window
 		Gtk::Label *msg;
 };
 #endif
-
-
-

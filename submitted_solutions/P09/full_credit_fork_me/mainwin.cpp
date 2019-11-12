@@ -1,7 +1,10 @@
 #include "mainwin.h"
 #include "shelter.h"
-// #include "dog.h"
-// #include "animal.h"
+#include "dog.h"
+#include "cat.h"
+#include "rabbit.h"
+#include "family.h"
+#include <string>
 #include <sstream>
 
 Mainwin::Mainwin() : Mainwin{*(new Shelter("Team Apocalips"))} { }
@@ -46,16 +49,35 @@ Mainwin::Mainwin(Shelter& shelter) : shelter{&shelter}
 	menuitem_list_animals->signal_activate().connect([this] {this->on_list_animals_click();});
 	animalmenu->append(*menuitem_list_animals);
 
-	// Data
-	data = Gtk::manage(new Gtk::Label());
-	data->set_hexpand(true);
-	data->set_vexpand(true);
-	vbox->add(*data);
+    // Client megamenu
+    Gtk::MenuItem *menuitem_client = Gtk::manage(new Gtk::MenuItem("Client", true));
+    menubar->append(*menuitem_client);
+    Gtk::Menu *clientmenu = Gtk::manage(new Gtk::Menu());
+    menuitem_client->set_submenu(*clientmenu);
 
-	// Msg
-	msg = Gtk::manage(new Gtk::Label());
-	msg->set_hexpand(true);
-	vbox->add(*msg);
+    // Add client option
+    Gtk::MenuItem *menuitem_new_client = Gtk::manage(new Gtk::MenuItem("_New", true));
+    menuitem_new_client->signal_activate().connect([this] {this->on_new_client_click();});
+    clientmenu->append(*menuitem_new_client);
+
+    // List clients option
+    Gtk::MenuItem *menuitem_list_clients = Gtk::manage(new Gtk::MenuItem("_List", true));
+    menuitem_list_clients->signal_activate().connect([this] {this->on_list_clients_click();});
+    clientmenu->append(*menuitem_list_clients);
+
+    // data
+    data = Gtk::manage(new Gtk::Label());
+    data->set_hexpand(true);
+    data->set_vexpand(true);
+    vbox->pack_start(*data, Gtk::PACK_EXPAND_WIDGET, 0);
+
+    // msg
+    msg = Gtk::manage(new Gtk::Label());
+    msg->set_hexpand(true);
+    msg->override_background_color(Gdk::RGBA{"gray"});
+    vbox->pack_start(*msg, Gtk::PACK_SHRINK, 0);
+
+    // show that shit
 	vbox->show_all();
 }
 
@@ -68,15 +90,9 @@ void Mainwin::on_quit_click()
     close();
 }
 
-// Add animal impplementation
-void Mainwin::on_new_animal_click()
+void Mainwin::on_new_client_click()
 {
-	std::string name = "";
-	double age = -1;
-
-    Gtk::Dialog *dialog = new Gtk::Dialog{"New Dog", *this};
-
-    Gtk::Dialog *dialog_family = new Gtk::Dialog{"Choose Family", *this};
+    Gtk::Dialog dialog {"New Client", *this};
 
     // Name
     Gtk::HBox name_box;
@@ -88,184 +104,192 @@ void Mainwin::on_new_animal_click()
     Gtk::Entry name_entry;
     name_entry.set_max_length(50);
     name_box.pack_start(name_entry, Gtk::PACK_SHRINK);
-    dialog->get_vbox()->pack_start(name_box, Gtk::PACK_SHRINK);
+    dialog.get_vbox()->pack_start(name_box, Gtk::PACK_SHRINK);
 
-    // Family
-    // is this needed at all? How do I fork based on family?
-    /*
-    Gtk::Hbox family_box;
+    // Phone
+    Gtk::HBox phone_box;
 
-    Gtk::Label family_label{"Family:"}
-    family_label.set_width_chars(20);
-    family_box.pack_start(family_label, Gtk::PACK_SHRINK);
+    Gtk::Label phone_label{"Phone:"};
+    phone_label.set_width_chars(20);
+    phone_box.pack_start(phone_label, Gtk::PACK_SHRINK);
 
-    Gtk::ComboBoxText combobox_family;
-    for(int i=0; i < family_to_string.size(); ++i) 
-    {
-        combobox_family.append(family_to_string[i]); 
-    }
-    combobox_family.set_active(0);
+    Gtk::Entry phone_entry;
+    phone_entry.set_max_length(50);
+    phone_box.pack_start(phone_entry, Gtk::PACK_SHRINK);
+    dialog.get_vbox()->pack_start(phone_box, Gtk::PACK_SHRINK);
 
-    family_box.pack_start(combobox_family, Gtk::PACK_SHRINK);
-    dialog->get_vbox()->pack_start(family_box, Gtk::PACK_SHRINK);
-	*/
+    // Email
+    Gtk::HBox email_box;
 
-    // Age
-    Gtk::HBox box_age;
+    Gtk::Label email_label{"Email:"};
+    email_label.set_width_chars(20);
+    email_box.pack_start(email_label, Gtk::PACK_SHRINK);
 
-    Gtk::Label label_age{"Age:"};
-    label_age.set_width_chars(20);
-    box_age.pack_start(label_age, Gtk::PACK_SHRINK);
+    Gtk::Entry email_entry;
+    email_entry.set_max_length(50);
+    email_box.pack_start(email_entry, Gtk::PACK_SHRINK);
+    dialog.get_vbox()->pack_start(email_box, Gtk::PACK_SHRINK);
 
-    Gtk::Entry entry_age;
-    entry_age.set_max_length(50);
-    box_age.pack_start(entry_age, Gtk::PACK_SHRINK);
-    dialog->get_vbox()->pack_start(box_age, Gtk::PACK_SHRINK);
-    
-    // Gender
-    Gtk::HBox box_gender;
-
-    Gtk::Label label_gender{"Gender:"};
-    label_gender.set_width_chars(20);
-    box_gender.pack_start(label_gender, Gtk::PACK_SHRINK);
-
-    Gtk::ComboBoxText combobox_gender;
-    
-    combobox_gender.append("Male");
-    combobox_gender.append("Female");
-    combobox_gender.set_active(0);
-
-    box_gender.pack_start(combobox_gender, Gtk::PACK_SHRINK);
-    dialog->get_vbox()->pack_start(box_gender, Gtk::PACK_SHRINK);
-
-    // Breed
-    Gtk::HBox box_breed;
-
-    Gtk::Label label_breed{"Breed:"};
-    label_breed.set_width_chars(20);
-    box_breed.pack_start(label_breed, Gtk::PACK_SHRINK);
-
-    Gtk::ComboBoxText combobox_breed;
-    for(int i=0; i < breed_to_string.size(); ++i) 
-    {
-        combobox_breed.append(breed_to_string[i]); 
-    }
-    combobox_breed.set_active(0);
-
-    box_breed.pack_start(combobox_breed, Gtk::PACK_SHRINK);
-    dialog->get_vbox()->pack_start(box_breed, Gtk::PACK_SHRINK);
-   
-    // Buttons
-    dialog->add_button("Cancel", 0);
-    dialog->add_button("Create", 1);
+    dialog.add_button("Cancel", 0);
+    dialog.add_button("Create", 1);
 
     // Showing it all
-    dialog->show_all();
+    dialog.show_all();
+ 
 
-    // Looping and exception handling
-    int result; 
-    bool fail = true; 
-    Family family; 
-    Gender gender;
-    Dog_breed breed;
-
-    while (fail) 
+    while (dialog.run()) 
     {
-        fail = false;  // optimist!
-        result = dialog->run();
-        if (result != 1) 
-        {
-            msg->set_text("Cancelled");
-            delete dialog;
-            return;
-        }
 
-		// select family
-	    // is this needed at all? How do I fork based on family?
-    	/*
-		int f = combobox_family.get_active_row_number():
-		switch(f)
-		{
-			case 0:
-				family = Family::dog;
-				break;
-			case 1:
-				family = Family::cat;
-				break;
-			case 2:
-				family = Family::rabbit;
-				break;
-		}
-		*/
-
-		// select gender
-		int g = combobox_gender.get_active_row_number();
-		if (g == 0)
-		{
-			gender = Gender::male; 	
-		}
-		else if (g == 1) // wamen #1
-		{
-			gender = Gender::female;
-		}
-	
-		// select breed
-		int b = combobox_breed.get_active_row_number();
-		switch (b)
-		{
-			case 0: 
-				breed = Dog_breed::Greyhound; 
-				break;
-			case 1: 
-				breed = Dog_breed::Akita; 
-				break;
-			case 2: 
-				breed = Dog_breed::CardiganCorgi; 
-				break;
-			case 3: 
-				breed = Dog_breed::BlueHeeler; 
-				break;
-			case 4: 
-				breed = Dog_breed::Chihuahua; 
-				break;
-			case 5: 
-				breed = Dog_breed::SaintBernard; 
-				break;
-			case 6: 
-				breed = Dog_breed::BassetHound; 
-				break;
-			case 7: 
-				breed = Dog_breed::BlueTick; 
-				break;
-		}
-	
-        // exception handling
-        try 
-        {
-            age = std::stoi(entry_age.get_text());
-        }
-        catch(std::exception e) 
-        {
-            entry_age.set_text("Invalid/Improper Entry");
-            fail = true;
-        }
-
-        // enter name
-        name = name_entry.get_text();
-        if (name.size() == 0) 
-        {
-            name_entry.set_text("Invalid/Improper Entry");
-            fail = true;
-        }
-
-
-
-		// allocate the dog and add to shelter
-		Dog* dog = new Dog(breed, name, gender, age); // jesus fuck this took a long time to unfuck
-		shelter->add_animal(*dog);
-	
+        // allocate the dog and add to shelter
+        Client* client = new Client{name_entry.get_text(), phone_entry.get_text(), email_entry.get_text()}; // jesus fuck this took a long time to unfuck
+        shelter->add_client(*client);
+        Gtk::MessageDialog{*this, "Sucessfully added a client but I'm too god damn lazy to implement a reset of the window. Just change the fields, it's all good. Also hit cancel to close the window."}.run();
+    
     }
-    delete dialog;
+}
+
+// Add animal impplementation
+void Mainwin::on_new_animal_click()
+{
+
+    Gtk::Dialog animalDialog{"Choose Your Fighter", *this};
+    Gtk::HBox animalBox;
+    Gtk::ComboBoxText combobox_animal;
+    Gtk::Label label_animal{"Animal: "};
+    animalBox.pack_start(label_animal, Gtk::PACK_SHRINK);
+    for(int i=0; i < family_to_string.size(); ++i) 
+    {
+        combobox_animal.append(family_to_string[i]); 
+    }
+    combobox_animal.set_active(0);
+    animalBox.pack_start(combobox_animal, Gtk::PACK_SHRINK);
+    animalDialog.get_vbox()->pack_start(animalBox, Gtk::PACK_SHRINK);
+    animalDialog.add_button("Continue", 1);
+    animalDialog.add_button("Cancel", 0);
+    animalDialog.show_all();
+    animalDialog.run();
+
+    Gtk::Dialog dialog{"Enter Info", *this};
+    
+    Gtk::HBox name_box;
+    Gtk::Label name_label{"Name:"};
+    Gtk::Entry name_entry;
+    name_box.pack_start(name_label, Gtk::PACK_SHRINK);
+    name_box.pack_start(name_entry, Gtk::PACK_SHRINK);
+    dialog.get_vbox()->pack_start(name_box, Gtk::PACK_SHRINK);
+
+    Gtk::HBox breed_box;
+    Gtk::Label breed_label{"Breed:"};
+    breed_box.pack_start(breed_label, Gtk::PACK_SHRINK);
+    Gtk::ComboBoxText combobox_breed;
+    if(combobox_animal.get_active_row_number() == 0)
+    {
+        for (auto b : dog_breeds)
+        {
+            combobox_breed.append(to_string(b));
+        }
+    }
+    else if(combobox_animal.get_active_row_number() == 1)
+    {
+        for (auto b : cat_breeds)
+        {
+            combobox_breed.append(to_string(b));
+        }
+    }
+    else if(combobox_animal.get_active_row_number() == 2)
+    {
+        for (auto b : rabbit_breeds)
+        {
+            combobox_breed.append(to_string(b));
+        }
+    }
+    combobox_breed.set_active(0);
+    breed_box.pack_start(combobox_breed, Gtk::PACK_SHRINK);
+    dialog.get_vbox()->pack_start(breed_box, Gtk::PACK_SHRINK);
+
+    Gtk::HBox gender_box;
+    Gtk::Label gender_label{"Gender:"};
+    Gtk::ComboBoxText combobox_gender;
+    /*  rip, I tried
+    for (auto b : genders)
+    {
+        combobox_gender.append(gender_to_string(b));
+    }
+    */
+    
+    for(int i=0; i < gender_to_string.size(); ++i) // this worked but didnt jive with my logic further south
+    {
+        combobox_gender.append(gender_to_string[i]); 
+    }
+    
+    // combobox_gender.append("FEMALE");
+    // combobox_gender.append("MALE");
+    combobox_gender.set_active(0);
+    gender_box.pack_start(gender_label, Gtk::PACK_SHRINK);
+    gender_box.pack_start(combobox_gender, Gtk::PACK_SHRINK);
+    dialog.get_vbox()->pack_start(gender_box, Gtk::PACK_SHRINK);
+
+   
+    Gtk::HBox age_box;
+    Gtk::Label age_label{"Age:"};
+    Gtk::SpinButton spinbutton_age; // god help me
+    spinbutton_age.set_range(0,50);
+    spinbutton_age.set_increments(1,5);
+    spinbutton_age.set_value(1);
+    age_box.pack_start(age_label, Gtk::PACK_SHRINK);
+    age_box.pack_start(spinbutton_age, Gtk::PACK_SHRINK);
+    dialog.get_vbox()->pack_start(age_box, Gtk::PACK_SHRINK);
+
+    // Buttons
+    dialog.add_button("Cancel", 0);
+    dialog.add_button("Add", 1);
+
+    // Showing it all
+    dialog.show_all();
+
+    while(dialog.run()) 
+    {
+        int result = combobox_animal.get_active_row_number();
+        if(result == 0) // user chose dog
+        {
+            if(name_entry.get_text().size() == 0)
+            {
+                name_entry.set_text("Must Fill"); 
+                continue;
+            }
+            Dog* dog = new Dog{ dog_breeds[combobox_breed.get_active_row_number()], name_entry.get_text(), (combobox_gender.get_active_row_number() ? Gender::FEMALE : Gender::MALE), static_cast<int>(spinbutton_age.get_value())};
+            shelter->add_animal(*dog);
+            // something to tell user successful addition?
+            Gtk::MessageDialog{*this, "Sucessfully Added"}.run();
+            break; // really dont like having to do this
+        }
+        else if(result == 1) // user chose cat
+        {
+            if(name_entry.get_text().size() == 0) 
+            {
+                name_entry.set_text("Must Fill");
+                continue;
+            }
+            Cat* cat = new Cat{ cat_breeds[combobox_breed.get_active_row_number()], name_entry.get_text(), (combobox_gender.get_active_row_number() ? Gender::FEMALE : Gender::MALE), static_cast<int>(spinbutton_age.get_value())};
+            shelter->add_animal(*cat);
+            // something to tell user successful addition?
+            Gtk::MessageDialog{*this, "Sucessfully Added"}.run();
+            break; // really dont like having to do this
+        }
+        else if(result == 2) // user chose rabbit
+        {
+            if(name_entry.get_text().size() == 0) 
+            {
+                name_entry.set_text("Must Fill");
+                continue;
+            }
+            Rabbit* rabbit = new Rabbit{rabbit_breeds[combobox_breed.get_active_row_number()], name_entry.get_text(), (combobox_gender.get_active_row_number() ? Gender::FEMALE : Gender::MALE), static_cast<int>(spinbutton_age.get_value())};
+            shelter->add_animal(*rabbit);
+            // something to tell user successful addition?
+            Gtk::MessageDialog{*this, "Sucessfully Added"}.run();
+            break; // really dont like having to do this
+        }
+    }
 }
 
 // List animals implementation
@@ -279,3 +303,12 @@ void Mainwin::on_list_animals_click()
     Gtk::MessageDialog{*this, animals_list.str()}.run();
 }
 
+void Mainwin::on_list_clients_click()
+{
+    std::stringstream clients_list;
+    for (int i = 0; i < shelter->num_clients(); i++)
+    {
+        clients_list << shelter->client(i) << std::endl;
+    }
+    Gtk::MessageDialog{*this, clients_list.str()}.run();
+}
