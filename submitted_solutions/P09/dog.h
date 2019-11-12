@@ -6,11 +6,6 @@
 #include <map>
 #include <ostream>
 
-std::string to_string(const Dog_breed& breed);
-
-std::ostream& operator<<(std::ostream& ost, const Dog_breed& breed);
-
-
 class Dog : public Animal 
 {
 	public:

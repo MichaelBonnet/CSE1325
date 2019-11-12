@@ -17,6 +17,10 @@ constexpr Dog_breed dog_breeds[] =
     Dog_breed::BlueTick,
 };
 
+std::string to_string(const Dog_breed& breed);
+
+std::ostream& operator<<(std::ostream& ost, const Dog_breed& breed);
+
 const std::vector<std::string> breed_to_string = 
 {"Greyhound", "Akita", "Cardigan Corgi", "Blue Heeler", "Chihuahua", "Saint Bernard", "Basset Hound", "Blue Tick"};
 
