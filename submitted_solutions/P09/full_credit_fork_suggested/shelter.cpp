@@ -1,6 +1,6 @@
 #include "shelter.h"
 
-Shelter::Shelter(std::string name) : _name{name} {name = "Team B Shelter"; }
+Shelter::Shelter(std::string name) : _name{name} { }
 
 std::string Shelter::name() 
 {
@@ -9,7 +9,7 @@ std::string Shelter::name()
 
 void Shelter::add_animal(Animal& animal) 
 {
-	_available.push_back(&animal);
+    _available.push_back(&animal);
 }
 
 int Shelter::num_animals() 
@@ -19,6 +19,6 @@ int Shelter::num_animals()
 
 Animal& Shelter::animal(int index) 
 {
-	return *_available[index];
+	return *(_available[index]);
 }
 
