@@ -30,8 +30,14 @@ With 64 threads:
 
 QUESTION: After threading is added to threads.cpp, is the order of prime numbers found in primes_threads.txt the same or different than in primes.txt?  Why?
 
+Different - different threads finish at different times, AND the order in which they would solve changes with the number of threads
+
 
 QUESTION: Does adding more threads continue to speed up the program? Do more threads ever slow down the program slightly?  Why or why not?
 
+It seems that adding more continued to speed up the program, just because equal processing power applied to more threads reducing total runtime.
+
 
 QUESTION: Does adding more threads increase the "system load", or is it constant regardless of the number of threads?  Why?
+
+System load increases because while the task is completed more efficiently, the system is managing a greater number of threads.
