@@ -1,31 +1,31 @@
-max_int for my machine (between 20 and 30 second runtime without threads):
+max_int for my machine (between 20 and 30 second runtime without threads): 15000000
 
 Without threads:
-
+24.783
 
 
 With 2 threads:
-
+15.560
 
 
 With 4 threads:
-
+8.513
 
 
 With 8 threads:
-
+5.994
 
 
 With 16 threads:
-
+5.467
 
 
 With 32 threads:
-
+5.224
 
 
 With 64 threads:
-
+5.108
 
 
 QUESTION: After threading is added to threads.cpp, is the order of prime numbers found in primes_threads.txt the same or different than in primes.txt?  Why?
