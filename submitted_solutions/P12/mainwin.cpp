@@ -167,6 +167,13 @@ Mainwin::Mainwin() : shelter{new Shelter{"Mavs Animal Shelter"}}
     toolbar->override_background_color(Gdk::RGBA{"gray"});
     vbox->pack_start(*toolbar, Gtk::PACK_SHRINK, 0);
 
+    //     N E W   S H E L T E R
+    // Add a new paint icon
+    Gtk::ToolButton *new_shelter_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::NEW));
+    new_shelter_button->set_tooltip_markup("Create a new shelter, discarding any in progress");
+    new_shelter_button->signal_clicked().connect([this] {this->on_new_shelter_click();});
+    toolbar->append(*new_shelter_button);
+
     // ///////////////////////
     // D A T A   D I S P L A Y
     // Provide a text entry box to show the remaining data
@@ -195,55 +202,14 @@ Mainwin::~Mainwin() { }
 // C A L L B A C K S
 // /////////////////
 
-/*
+void Mainwin::on_new_shelter_click() 
+{
+    /*if (all_data_saved())*/ 
+    shelter->clear();
+}
+
 void Mainwin::on_open_click() 
 {
-    Gtk::FileChooserDialog dialog("Please choose a file",
-          Gtk::FileChooserAction::FILE_CHOOSER_ACTION_OPEN);
-    dialog.set_transient_for(*this);
-
-    auto filter_ctp = Gtk::FileFilter::create();
-    filter_ctp->set_name(EXT);
-    filter_ctp->add_pattern("*."+EXT);
-    dialog.add_filter(filter_ctp);
- 
-    auto filter_any = Gtk::FileFilter::create();
-    filter_any->set_name("Any files");
-    filter_any->add_pattern("*");
-    dialog.add_filter(filter_any);
-
-    dialog.set_filename("untitled."+EXT);
-
-    //Add response buttons the the dialog:
-    dialog.add_button("_Cancel", 0);
-    dialog.add_button("_Open", 1);
-
-    int result = dialog.run();
-
-    if (result == 1) 
-    {
-        try 
-        {
-            delete shelter;
-            std::ifstream ifs{"untitled.mass"};
-            std::string s;
-            std::getline(ifs,s);
-            if(s != COOKIE) throw std::runtime_error{"Not a MASS file"};
-            std::getline(ifs,s);
-            if(s != VERSION) throw std::runtime_error{"Incompatible MASS file version"};
-            shelter = new Shelter{ifs};
-        } 
-        catch (std::exception& e) 
-        {
-            std::ostringstream oss;
-            oss << "Unable to open file: untitled.mass\n" << e.what();
-            Gtk::MessageDialog{*this, oss.str(), false, Gtk::MESSAGE_ERROR}.run();
-        }
-    }
-}
-*/
-
-void Mainwin::on_open_click() {
     // Don't lose existing data
     //if(!all_data_saved()) return;
 
@@ -268,30 +234,27 @@ void Mainwin::on_open_click() {
 
     int result = dialog.run();
 
-    if (result == 1) {
-        try {
+    if (result == 1) 
+    {
+        
+        try 
+        {
             std::ifstream ifs{dialog.get_filename()};
             shelter = new Shelter(ifs);
-        } catch (std::exception& e) {
+        } 
+        catch (std::exception& e) 
+        {
             Gtk::MessageDialog{*this, "Unable to open shelter", false, Gtk::MESSAGE_ERROR}.run();
         }
     }
 }
 
-void Mainwin::on_save_click() 
-{
-    try 
-    {
+void Mainwin::on_save_click() {
+    try {
         std::ofstream ofs{shelter->get_filename()};
-        ofs << COOKIE << '\n';
-        ofs << VERSION << '\n';
         shelter->save(ofs);
-    } 
-    catch (std::exception& e) 
-    {
-        std::ostringstream oss;
-        oss << "Unable to save file: untitled.mass\n" << e.what();
-        Gtk::MessageDialog{*this, oss.str(), false, Gtk::MESSAGE_ERROR}.run();
+    } catch(std::exception e) {
+        Gtk::MessageDialog{*this, "Unable to save data", false, Gtk::MESSAGE_ERROR}.run();
     }
 }
 

@@ -79,3 +79,9 @@ void Shelter::set_filename(std::string filename)
 {
     this->filename = filename;
 }
+
+void Shelter::clear()
+{
+    _available.clear();
+    _clients.clear();
+}

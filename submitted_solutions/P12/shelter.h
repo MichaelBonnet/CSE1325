@@ -13,6 +13,7 @@ class Shelter
     std::string name();
     Shelter(std::istream& ist);
     void save(std::ostream& ost);
+    void clear();
 
     void add_animal(Animal& animal);
     int num_animals();

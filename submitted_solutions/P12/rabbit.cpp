@@ -43,19 +43,20 @@ std::string Rabbit::breed() const
 // Convert breed to string and stream - use a std::map for other derived classes!
 std::string to_string(const Rabbit_breed& breed) 
 {
-    std::map<Rabbit_breed,std::string> rabbits_map {
-        { Rabbit_breed::CALIFORNIA_WHITE,  "California White"}, 
-        { Rabbit_breed::VIENNA_WHITE,  "Vienna White"},
-        { Rabbit_breed::CHINCHILLA,  "Chinchilla"}, 
-        { Rabbit_breed::GIANT_CHINCHILLA,  "Giant Chinchilla"}, 
-        { Rabbit_breed::FLEMISH_CHINCHILLA,  "Flemish Chinchilla"}, 
-        { Rabbit_breed::REX,  "Rex"}, 
-        { Rabbit_breed::LIONHEAD,  "Lionhead"}, 
-        { Rabbit_breed::SILVER_FOX,  "Silver Fox"}, 
-        { Rabbit_breed::NEW_ZEALAND,  "New Zealand"}, 
-        { Rabbit_breed::LOP,  "Lop"}, 
-        { Rabbit_breed::POLISH,  "Polish"}, 
-        { Rabbit_breed::HARLEQUIN,  "Harlequin"},
+    std::map<Rabbit_breed,std::string> rabbits_map 
+    {
+        { Rabbit_breed::CALIFORNIA_WHITE,    "California White"    }, 
+        { Rabbit_breed::VIENNA_WHITE,        "Vienna White"        },
+        { Rabbit_breed::CHINCHILLA,          "Chinchilla"          }, 
+        { Rabbit_breed::GIANT_CHINCHILLA,    "Giant Chinchilla"    }, 
+        { Rabbit_breed::FLEMISH_CHINCHILLA,  "Flemish Chinchilla"  }, 
+        { Rabbit_breed::REX,                 "Rex"                 }, 
+        { Rabbit_breed::LIONHEAD,            "Lionhead"            }, 
+        { Rabbit_breed::SILVER_FOX,          "Silver Fox"          }, 
+        { Rabbit_breed::NEW_ZEALAND,         "New Zealand"         }, 
+        { Rabbit_breed::LOP,                 "Lop"                 }, 
+        { Rabbit_breed::POLISH,              "Polish"              }, 
+        { Rabbit_breed::HARLEQUIN,           "Harlequin"           },
     };
     try 
     {

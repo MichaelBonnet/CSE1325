@@ -21,6 +21,7 @@ class Mainwin : public Gtk::Window
         void on_save_click();              // Save the shelter's data
         void on_save_as_click();
         void on_about_click();
+        void on_new_shelter_click();
         void on_quit_click();              // Exit the application
         void on_new_animal_click();        // Create a new animal
         void on_list_animals_click();      // List all animals
@@ -32,7 +33,7 @@ class Mainwin : public Gtk::Window
         void status(std::string s);        // Set the status message
     private:
         Shelter *shelter;                  // Current animal shelter
-        Gtk::Label *data;                 // Display for data area
+        Gtk::Label *data;                  // Display for data area
         Gtk::Label *msg;                   // Status message display
 };
 #endif 
