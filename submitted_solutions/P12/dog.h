@@ -4,7 +4,8 @@
 #include "animal.h"
 
 // List of dog breeds, conversion to/from string and stream, and iteration
-enum class Dog_breed {
+enum class Dog_breed 
+{
     BEAGLE,
     BOXER,
     BULLDOG,
@@ -18,7 +19,9 @@ enum class Dog_breed {
     SHEPHERD,
     TERRIER,
 };
-constexpr Dog_breed dog_breeds[] = {
+
+constexpr Dog_breed dog_breeds[] = 
+{
     Dog_breed::BEAGLE,
     Dog_breed::BOXER,
     Dog_breed::BULLDOG,
@@ -32,12 +35,15 @@ constexpr Dog_breed dog_breeds[] = {
     Dog_breed::SHEPHERD,
     Dog_breed::TERRIER,
 };
+
 // Dog implements to_string using a switch statement (if/else if/else is equivalent)
 std::string to_string(const Dog_breed& breed);
+
 std::ostream& operator<<(std::ostream& ost, const Dog_breed& breed);
 
 // Class Dog with overrides for family and breed
-class Dog : public Animal {
+class Dog : public Animal 
+{
   public:
     Dog(Dog_breed breed, std::string name, Gender gender, int age);
     Dog(std::istream& ist);

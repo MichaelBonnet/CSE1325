@@ -4,7 +4,8 @@
 #include "animal.h"
 #include <map>
 
-enum class Cat_breed {
+enum class Cat_breed 
+{
     ABYSSINIAN,
     AMERICAN_SHORTHAIR,
     BENGAL,
@@ -18,7 +19,9 @@ enum class Cat_breed {
     RAGDOLL,
     SIAMESE,
 };
-constexpr Cat_breed cat_breeds[] = {
+
+constexpr Cat_breed cat_breeds[] = 
+{
     Cat_breed::ABYSSINIAN,
     Cat_breed::AMERICAN_SHORTHAIR,
     Cat_breed::BENGAL,
@@ -32,6 +35,7 @@ constexpr Cat_breed cat_breeds[] = {
     Cat_breed::RAGDOLL,
     Cat_breed::SIAMESE,
 };
+
 // Cat implements to_string with a global map, which makes cat_breeds[] above redundant,
 // since you can iterate over all cat breeds using this:
 //    for (auto& [breed, s] : cats_map)
@@ -42,7 +46,8 @@ extern const std::map<Cat_breed, std::string> cats_map;
 std::string to_string(const Cat_breed& breed);
 std::ostream& operator<<(std::ostream& ost, const Cat_breed& breed);
 
-class Cat : public Animal {
+class Cat : public Animal 
+{
   public:
     Cat(Cat_breed breed, std::string name, Gender gender, int age);
     Cat(std::istream& ist);

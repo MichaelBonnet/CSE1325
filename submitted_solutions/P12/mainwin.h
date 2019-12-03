@@ -9,7 +9,8 @@ const std::string APP_NAME{"edu.uta.cse1325.mass.v0_1_0"};
 const std::string VERSION{"0.1.0"};
 const std::string COOKIE{"M⅍S1"};
 
-class Mainwin : public Gtk::Window {
+class Mainwin : public Gtk::Window 
+{
     public:
         Mainwin();
         virtual ~Mainwin();

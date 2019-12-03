@@ -4,10 +4,13 @@
 #include <iostream>
 
 enum class Gender{FEMALE, MALE};
+
 std::string to_string(Gender gender);
+
 std::ostream& operator<<(std::ostream& ost, const Gender& gender);
 
-class Animal {
+class Animal 
+{
   public:
     Animal(std::string name, Gender gender, int age);
     virtual ~Animal();

@@ -6,7 +6,8 @@
 #include <sstream>
 #include <fstream>
 
-Mainwin::Mainwin() : shelter{new Shelter{"Mavs Animal Shelter"}} {
+Mainwin::Mainwin() : shelter{new Shelter{"Mavs Animal Shelter"}} 
+{
 
     // /////////////////
     // G U I   S E T U P
@@ -173,8 +174,10 @@ Mainwin::~Mainwin() { }
 // C A L L B A C K S
 // /////////////////
 
-void Mainwin::on_open_click() {
-    try {
+void Mainwin::on_open_click() 
+{
+    try 
+    {
         delete shelter;
         std::ifstream ifs{"untitled.mass"};
         std::string s;
@@ -183,30 +186,38 @@ void Mainwin::on_open_click() {
         std::getline(ifs,s);
         if(s != VERSION) throw std::runtime_error{"Incompatible MASS file version"};
         shelter = new Shelter{ifs};
-    } catch (std::exception& e) {
+    } 
+    catch (std::exception& e) 
+    {
         std::ostringstream oss;
         oss << "Unable to open file: untitled.mass\n" << e.what();
         Gtk::MessageDialog{*this, oss.str(), false, Gtk::MESSAGE_ERROR}.run();
     }
 }
-void Mainwin::on_save_click() {
-    try {
+void Mainwin::on_save_click() 
+{
+    try 
+    {
         std::ofstream ofs{"untitled.mass"};
         ofs << COOKIE << '\n';
         ofs << VERSION << '\n';
         shelter->save(ofs);
-    } catch (std::exception& e) {
+    } 
+    catch (std::exception& e) 
+    {
         std::ostringstream oss;
         oss << "Unable to save file: untitled.mass\n" << e.what();
         Gtk::MessageDialog{*this, oss.str(), false, Gtk::MESSAGE_ERROR}.run();
     }
 }
 
-void Mainwin::on_quit_click() {
+void Mainwin::on_quit_click() 
+{
     close();
 }
 
-void Mainwin::on_new_animal_click() {
+void Mainwin::on_new_animal_click() 
+{
     status("");
 
     Gtk::Dialog adialog{"Animal Type", *this};
@@ -223,13 +234,18 @@ void Mainwin::on_new_animal_click() {
 
     std::string animal_type;
     Gtk::ComboBoxText c_breed;
-    if (atype.get_active_row_number() == 0) {
+    if (atype.get_active_row_number() == 0) 
+    {
         animal_type = "Dog";
         for(auto b : dog_breeds) c_breed.append(to_string(b));
-    } else if (atype.get_active_row_number() == 1) {
+    }
+	else if (atype.get_active_row_number() == 1) 
+	{
         animal_type = "Cat";
         for (auto& [c, s] : cats_map) c_breed.append(to_string(c));
-    } else if (atype.get_active_row_number() == 2) {
+    }
+	else if (atype.get_active_row_number() == 2) 
+	{
         animal_type = "Rabbit";
         for(auto r : rabbit_breeds) c_breed.append(to_string(r));
     }
@@ -272,7 +288,8 @@ void Mainwin::on_new_animal_click() {
 
     dialog.show_all();
 
-    while(dialog.run()) {
+    while(dialog.run()) 
+    {
         if (e_name.get_text().size() == 0) {e_name.set_text("*required*"); continue;}
         Animal* animal;
         if (animal_type == "Dog")
@@ -300,14 +317,18 @@ void Mainwin::on_new_animal_click() {
     }
 }
 
-void Mainwin::on_list_animals_click() {
+void Mainwin::on_list_animals_click() 
+{
     std::ostringstream oss;
     for(int i=0; i<shelter->num_animals(); ++i)
+    {
         oss << shelter->animal(i) << '\n'; 
+    }
     data->set_text(oss.str());
     status("List of All Animals");
 }
-void Mainwin::on_new_client_click() {
+void Mainwin::on_new_client_click() 
+{
     status("");
     Gtk::Dialog dialog{"Client Information", *this};
 
@@ -335,7 +356,8 @@ void Mainwin::on_new_client_click() {
 
     dialog.show_all();
 
-    while(dialog.run()) {
+    while(dialog.run()) 
+    {
         if (e_name.get_text().size() == 0) {e_name.set_text("*required*"); continue;}
         if (e_phone.get_text().size() == 0) {e_phone.set_text("*required*"); continue;}
         if (e_email.get_text().size() == 0) {e_email.set_text("*required*"); continue;}
@@ -351,22 +373,29 @@ void Mainwin::on_new_client_click() {
     }
 }
 
-void Mainwin::on_list_clients_click() {
+void Mainwin::on_list_clients_click() 
+{
     std::ostringstream oss;
     for(int i=0; i<shelter->num_clients(); ++i)
+    {
         oss << shelter->client(i) << '\n'; 
+    }
     data->set_text(oss.str());
     status("List of All Clients");
 }
 
-void Mainwin::on_adopt_animal_click() {
+void Mainwin::on_adopt_animal_click() 
+{
     status("");
 
-    if(shelter->num_animals() == 0) {
+    if(shelter->num_animals() == 0) 
+    {
         Gtk::MessageDialog{*this, "No animals available to adopt!"}.run();
         return;
     }
-    if(shelter->num_clients() == 0) {
+
+    if(shelter->num_clients() == 0) 
+    {
         Gtk::MessageDialog{*this, "No clients currently registered!"}.run();
         return;
     }
@@ -376,7 +405,8 @@ void Mainwin::on_adopt_animal_click() {
     Gtk::Grid grid;
 
     Gtk::ComboBoxText c_client;
-    for(int i=0; i<shelter->num_clients(); ++i) {
+    for(int i=0; i<shelter->num_clients(); ++i) 
+    {
         std::ostringstream oss;
         oss << shelter->client(i);
         c_client.append(oss.str());
@@ -387,7 +417,8 @@ void Mainwin::on_adopt_animal_click() {
     grid.attach(c_client, 1, 1, 2, 1);
 
     Gtk::ComboBoxText c_animal;
-    for(int i=0; i<shelter->num_animals(); ++i) {
+    for(int i=0; i<shelter->num_animals(); ++i) 
+    {
         std::ostringstream oss;
         oss << shelter->animal(i);
         c_animal.append(oss.str());
@@ -404,14 +435,17 @@ void Mainwin::on_adopt_animal_click() {
 
     dialog.show_all();
 
-    if (dialog.run()) {
+    if (dialog.run()) 
+    {
         shelter->adopt(shelter->client(c_client.get_active_row_number()),
                        shelter->animal(c_animal.get_active_row_number()));
     }
 }
 
-void Mainwin::on_list_adopted_click() {
-    if(shelter->num_clients() == 0) {
+void Mainwin::on_list_adopted_click() 
+{
+    if(shelter->num_clients() == 0) 
+    {
         Gtk::MessageDialog{*this, "No clients currently registered!"}.run();
         return;
     }
@@ -422,14 +456,17 @@ void Mainwin::on_list_adopted_click() {
 
     Gtk::ComboBoxText c_client;
     std::vector<int> c2index;
-    for(int i=0; i<shelter->num_clients(); ++i) {
-        if(shelter->client(i).num_adopted()) {
+    for(int i=0; i<shelter->num_clients(); ++i) 
+    {
+        if(shelter->client(i).num_adopted()) 
+        {
             std::ostringstream oss;
             oss << shelter->client(i);
             c_client.append(oss.str());
             c2index.push_back(i);
         }
     }
+
     c_client.set_active(0);
     Gtk::Label l_client{"Client"};
     grid.attach(l_client, 0, 1, 1, 1);
@@ -442,13 +479,16 @@ void Mainwin::on_list_adopted_click() {
 
     dialog.show_all();
 
-    if(dialog.run()) {
+    if(dialog.run()) 
+    {
         int index = c2index[c_client.get_active_row_number()];
         Client& client = shelter->client(index);
         std::ostringstream oss;
 
         for(int i=0; i < client.num_adopted(); ++i)
+        {
             oss << client.animal(i) << '\n';
+        }
         data->set_text(oss.str());
 
         std::ostringstream osc;
@@ -462,6 +502,7 @@ void Mainwin::on_list_adopted_click() {
 // U T I L I T I E S
 // /////////////////
 
-void Mainwin::status(std::string s) {
+void Mainwin::status(std::string s) 
+{
     msg->set_text(s);
 }

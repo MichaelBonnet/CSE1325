@@ -5,7 +5,8 @@
 #include <string>
 #include <vector>
 
-class Client {
+class Client 
+{
   public:
     Client(std::string name, std::string phone, std::string email);
     ~Client();

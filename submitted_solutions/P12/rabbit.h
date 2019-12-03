@@ -3,7 +3,8 @@
 
 #include "animal.h"
 
-enum class Rabbit_breed {
+enum class Rabbit_breed 
+{
     CALIFORNIA_WHITE,
     CHINCHILLA,
     FLEMISH_CHINCHILLA,
@@ -18,7 +19,9 @@ enum class Rabbit_breed {
     SILVER_FOX, 
     VIENNA_WHITE,
 };
-constexpr Rabbit_breed rabbit_breeds[] = {
+
+constexpr Rabbit_breed rabbit_breeds[] = 
+{
     Rabbit_breed::CALIFORNIA_WHITE,
     Rabbit_breed::CHINCHILLA,
     Rabbit_breed::FLEMISH_CHINCHILLA,
@@ -33,11 +36,14 @@ constexpr Rabbit_breed rabbit_breeds[] = {
     Rabbit_breed::SILVER_FOX, 
     Rabbit_breed::VIENNA_WHITE,
 };
+
 // Rabbit implements to_string with a private std::map
 std::string to_string(const Rabbit_breed& breed);
+
 std::ostream& operator<<(std::ostream& ost, const Rabbit_breed& breed);
 
-class Rabbit : public Animal {
+class Rabbit : public Animal 
+{
   public:
     Rabbit(Rabbit_breed breed, std::string name, Gender gender, int age);
     virtual ~Rabbit();

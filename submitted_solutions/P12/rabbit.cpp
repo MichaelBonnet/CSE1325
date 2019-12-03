@@ -4,27 +4,44 @@
 // Constructor / Destructor - note how delegation to base class works!
 Rabbit::Rabbit(Rabbit_breed breed, std::string name, Gender gender, int age)
     : Animal(name, gender, age), _breed{breed} { }
+
 Rabbit::~Rabbit() { }
 
 // File I/O
-Rabbit::Rabbit(std::istream& ist) : Animal(ist) {
+Rabbit::Rabbit(std::istream& ist) : Animal(ist) 
+{
     std::string s;
     getline(ist, s);
-    for(Rabbit_breed breed : rabbit_breeds) 
-        if(s == ::to_string(breed)) {_breed = breed; break;}
+    for(Rabbit_breed breed : rabbit_breeds)
+    { 
+        if(s == ::to_string(breed)) 
+        {
+            _breed = breed; 
+            break;
+        }
+    }
 }
-void Rabbit::save(std::ostream& ost) {
+void Rabbit::save(std::ostream& ost) 
+{
     ost << "Rabbit\n";
     Animal::save(ost);
     ost << breed() << '\n';
 }
 
 // Overrides for pure virtual methods
-std::string Rabbit::family() const {return "rabbit";}
-std::string Rabbit::breed() const {return ::to_string(_breed);}
+std::string Rabbit::family() const 
+{
+    return "rabbit";
+}
+
+std::string Rabbit::breed() const 
+{
+    return ::to_string(_breed);
+}
 
 // Convert breed to string and stream - use a std::map for other derived classes!
-std::string to_string(const Rabbit_breed& breed) {
+std::string to_string(const Rabbit_breed& breed) 
+{
     std::map<Rabbit_breed,std::string> rabbits_map {
         { Rabbit_breed::CALIFORNIA_WHITE,  "California White"}, 
         { Rabbit_breed::VIENNA_WHITE,  "Vienna White"},
@@ -39,15 +56,19 @@ std::string to_string(const Rabbit_breed& breed) {
         { Rabbit_breed::POLISH,  "Polish"}, 
         { Rabbit_breed::HARLEQUIN,  "Harlequin"},
     };
-    try {
+    try 
+    {
         return rabbits_map.at(breed);
-    } catch (std::exception& e) {
+    } 
+    catch (std::exception& e) 
+    {
         return "Unknown";
     }
 }
 
 // Streaming I/O
-std::ostream& operator<<(std::ostream& ost, const Rabbit_breed& breed) {
+std::ostream& operator<<(std::ostream& ost, const Rabbit_breed& breed) 
+{
     ost << ::to_string(breed);
     return ost;
 }

@@ -3,26 +3,43 @@
 // Constructor / Destructor - note how delegation to base class works!
 Cat::Cat(Cat_breed breed, std::string name, Gender gender, int age)
     : Animal(name, gender, age), _breed{breed} { }
+
 Cat::~Cat() { }
 
 // File I/O
-Cat::Cat(std::istream& ist) : Animal(ist) {
+Cat::Cat(std::istream& ist) : Animal(ist) 
+{
     std::string s;
     getline(ist, s);
     for(auto& [_breed, breed_name] : cats_map)
-        if(s == breed_name) break;
+    {
+        if(s == breed_name) 
+        {
+            break;
+        }
+    }
 }
-void Cat::save(std::ostream& ost) {
+
+void Cat::save(std::ostream& ost) 
+{
     ost << "Cat\n";
     Animal::save(ost);
     ost << breed() << '\n';
 }
 // Overrides for pure virtual methods
-std::string Cat::family() const {return "cat";}
-std::string Cat::breed() const {return ::to_string(_breed);}
+std::string Cat::family() const 
+{
+    return "cat";
+}
+
+std::string Cat::breed() const 
+{
+    return ::to_string(_breed);
+}
 
 // Convert breed to string and stream - use a std::map for other derived classes!
-const std::map<Cat_breed, std::string> cats_map = {
+const std::map<Cat_breed, std::string> cats_map = 
+{
     {Cat_breed::MIX                , "Mix"               },
     {Cat_breed::SIAMESE            , "Siamese"           }, 
     {Cat_breed::PERSIAN            , "Persian"           }, 
@@ -36,16 +53,22 @@ const std::map<Cat_breed, std::string> cats_map = {
     {Cat_breed::AMERICAN_SHORTHAIR , "American Shorthair"}, 
     {Cat_breed::HIMALAYAN          , "Himalayan"         }, 
 };
-std::string to_string(const Cat_breed& breed) {
-    try {
+
+std::string to_string(const Cat_breed& breed) 
+{
+    try 
+    {
         return cats_map.at(breed);
-    } catch (std::exception& e) {
+    } 
+    catch (std::exception& e) 
+    {
         return "Unknown";
     }
 }
 
 // Streaming I/O
-std::ostream& operator<<(std::ostream& ost, const Cat_breed& breed) {
+std::ostream& operator<<(std::ostream& ost, const Cat_breed& breed) 
+{
     ost << ::to_string(breed);
     return ost;
 }

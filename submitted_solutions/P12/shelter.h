@@ -5,7 +5,8 @@
 #include "client.h"
 #include <vector>
 
-class Shelter {
+class Shelter 
+{
   public:
     Shelter(std::string name);
     ~Shelter();
