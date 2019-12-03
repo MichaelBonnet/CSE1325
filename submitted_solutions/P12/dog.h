@@ -2,6 +2,7 @@
 #define __DOG_H
 
 #include "animal.h"
+#include <map>
 
 // List of dog breeds, conversion to/from string and stream, and iteration
 enum class Dog_breed 
@@ -40,6 +41,8 @@ constexpr Dog_breed dog_breeds[] =
 std::string to_string(const Dog_breed& breed);
 
 std::ostream& operator<<(std::ostream& ost, const Dog_breed& breed);
+
+extern const std::map<Dog_breed, std::string> dogs_map;
 
 // Class Dog with overrides for family and breed
 class Dog : public Animal 

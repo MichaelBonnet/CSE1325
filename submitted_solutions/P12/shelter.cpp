@@ -69,3 +69,13 @@ void Shelter::adopt(Client& client, Animal& animal)
     client.adopt(animal);
     _available.erase(std::remove(_available.begin(), _available.end(), &animal), _available.end());
 }
+
+std::string Shelter::get_filename() 
+{
+    return filename;
+}
+
+void Shelter::set_filename(std::string filename) 
+{
+    this->filename = filename;
+}

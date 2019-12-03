@@ -43,7 +43,9 @@ constexpr Cat_breed cat_breeds[] =
 //    for (Cat_breed breed : cat_breeds)
 // This eliminates cat_breeds (and 1 of your 3 redundant breeds lists) entirely.
 extern const std::map<Cat_breed, std::string> cats_map;
+
 std::string to_string(const Cat_breed& breed);
+
 std::ostream& operator<<(std::ostream& ost, const Cat_breed& breed);
 
 class Cat : public Animal 

@@ -8,6 +8,8 @@ const std::string APP_TITLE{"Mavs Animal Shelter Software"};
 const std::string APP_NAME{"edu.uta.cse1325.mass.v0_1_0"};
 const std::string VERSION{"0.1.0"};
 const std::string COOKIE{"M⅍S1"};
+const std::string EXT = "mass";
+const std::string TITLE = "MAVSANIMALSHELTERSOFTWARE";
 
 class Mainwin : public Gtk::Window 
 {
@@ -17,6 +19,8 @@ class Mainwin : public Gtk::Window
     protected:
         void on_open_click();              // Load the shelter's data
         void on_save_click();              // Save the shelter's data
+        void on_save_as_click();
+        void on_about_click();
         void on_quit_click();              // Exit the application
         void on_new_animal_click();        // Create a new animal
         void on_list_animals_click();      // List all animals

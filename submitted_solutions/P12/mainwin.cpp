@@ -45,11 +45,18 @@ Mainwin::Mainwin() : shelter{new Shelter{"Mavs Animal Shelter"}}
     menuitem_save->signal_activate().connect([this] {this->on_save_click();});
     filemenu->append(*menuitem_save);
 
+    //         S A V E   S H E L T E R   A S
+    // Append Save As... to the File menu
+    Gtk::MenuItem *menuitem_save_as = Gtk::manage(new Gtk::MenuItem("Save _As", true));
+    menuitem_save_as->signal_activate().connect([this] {this->on_save_as_click();});
+    filemenu->append(*menuitem_save_as);
+
     //         T E S T
     // Append Test to the File menu
     Gtk::MenuItem *menuitem_test = Gtk::manage(new Gtk::MenuItem("_Test", true));
     menuitem_test->signal_activate().connect([this] {
-        Animal* animals[] = {
+        Animal* animals[] = 
+        {
             new Dog   {Dog_breed::MIX,          "Fido",      Gender::MALE,   3},
             new Cat   {Cat_breed::MIX,          "Mouser",    Gender::FEMALE, 2},
             new Rabbit{Rabbit_breed::HARLEQUIN, "Hopper",    Gender::MALE,   7},
@@ -65,7 +72,8 @@ Mainwin::Mainwin() : shelter{new Shelter{"Mavs Animal Shelter"}}
         };
         for (auto a : animals) shelter->add_animal(*a);
 
-        Client clients[] = {
+        Client clients[] = 
+        {
             Client{"Clifford Red",     "817-555-1212", "clifford@scholastic.com"},
             Client{"Mary Tyler Moore", "817-CAT-MEOW", "mtm@wjm.tv"             },
             Client{"Mr. Magoo",        "817-555-0000", "mr.magoo@fleamail.com"  },
@@ -139,6 +147,19 @@ Mainwin::Mainwin() : shelter{new Shelter{"Mavs Animal Shelter"}}
     menuitem_list_adoptions->signal_activate().connect([this] {this->on_list_adopted_click();});
     clientmenu->append(*menuitem_list_adoptions);
 
+    //     H E L P
+    // Create a Help menu and add to the menu bar
+    Gtk::MenuItem *menuitem_help = Gtk::manage(new Gtk::MenuItem("_Help", true));
+    menubar->append(*menuitem_help);
+    Gtk::Menu *helpmenu = Gtk::manage(new Gtk::Menu());
+    menuitem_help->set_submenu(*helpmenu);
+
+    //           A B O U T
+    // Append About to the Help menu
+    Gtk::MenuItem *menuitem_about = Gtk::manage(new Gtk::MenuItem("_About", true));
+    menuitem_about->signal_activate().connect([this] {this->on_about_click();});
+    helpmenu->append(*menuitem_about);
+
     // /////////////
     // T O O L B A R
     // Add a toolbar to the vertical box below the menu
@@ -174,31 +195,94 @@ Mainwin::~Mainwin() { }
 // C A L L B A C K S
 // /////////////////
 
+/*
 void Mainwin::on_open_click() 
 {
-    try 
+    Gtk::FileChooserDialog dialog("Please choose a file",
+          Gtk::FileChooserAction::FILE_CHOOSER_ACTION_OPEN);
+    dialog.set_transient_for(*this);
+
+    auto filter_ctp = Gtk::FileFilter::create();
+    filter_ctp->set_name(EXT);
+    filter_ctp->add_pattern("*."+EXT);
+    dialog.add_filter(filter_ctp);
+ 
+    auto filter_any = Gtk::FileFilter::create();
+    filter_any->set_name("Any files");
+    filter_any->add_pattern("*");
+    dialog.add_filter(filter_any);
+
+    dialog.set_filename("untitled."+EXT);
+
+    //Add response buttons the the dialog:
+    dialog.add_button("_Cancel", 0);
+    dialog.add_button("_Open", 1);
+
+    int result = dialog.run();
+
+    if (result == 1) 
     {
-        delete shelter;
-        std::ifstream ifs{"untitled.mass"};
-        std::string s;
-        std::getline(ifs,s);
-        if(s != COOKIE) throw std::runtime_error{"Not a MASS file"};
-        std::getline(ifs,s);
-        if(s != VERSION) throw std::runtime_error{"Incompatible MASS file version"};
-        shelter = new Shelter{ifs};
-    } 
-    catch (std::exception& e) 
-    {
-        std::ostringstream oss;
-        oss << "Unable to open file: untitled.mass\n" << e.what();
-        Gtk::MessageDialog{*this, oss.str(), false, Gtk::MESSAGE_ERROR}.run();
+        try 
+        {
+            delete shelter;
+            std::ifstream ifs{"untitled.mass"};
+            std::string s;
+            std::getline(ifs,s);
+            if(s != COOKIE) throw std::runtime_error{"Not a MASS file"};
+            std::getline(ifs,s);
+            if(s != VERSION) throw std::runtime_error{"Incompatible MASS file version"};
+            shelter = new Shelter{ifs};
+        } 
+        catch (std::exception& e) 
+        {
+            std::ostringstream oss;
+            oss << "Unable to open file: untitled.mass\n" << e.what();
+            Gtk::MessageDialog{*this, oss.str(), false, Gtk::MESSAGE_ERROR}.run();
+        }
     }
 }
+*/
+
+void Mainwin::on_open_click() {
+    // Don't lose existing data
+    //if(!all_data_saved()) return;
+
+    Gtk::FileChooserDialog dialog("Please choose a file", Gtk::FileChooserAction::FILE_CHOOSER_ACTION_OPEN);
+    dialog.set_transient_for(*this);
+
+    auto filter_mass = Gtk::FileFilter::create();
+    filter_mass->set_name(EXT);
+    filter_mass->add_pattern("*."+EXT);
+    dialog.add_filter(filter_mass);
+ 
+    auto filter_any = Gtk::FileFilter::create();
+    filter_any->set_name("Any files");
+    filter_any->add_pattern("*");
+    dialog.add_filter(filter_any);
+
+    dialog.set_filename("untitled."+EXT);
+
+    //Add response buttons the the dialog:
+    dialog.add_button("_Cancel", 0);
+    dialog.add_button("_Open", 1);
+
+    int result = dialog.run();
+
+    if (result == 1) {
+        try {
+            std::ifstream ifs{dialog.get_filename()};
+            shelter = new Shelter(ifs);
+        } catch (std::exception& e) {
+            Gtk::MessageDialog{*this, "Unable to open shelter", false, Gtk::MESSAGE_ERROR}.run();
+        }
+    }
+}
+
 void Mainwin::on_save_click() 
 {
     try 
     {
-        std::ofstream ofs{"untitled.mass"};
+        std::ofstream ofs{shelter->get_filename()};
         ofs << COOKIE << '\n';
         ofs << VERSION << '\n';
         shelter->save(ofs);
@@ -208,6 +292,36 @@ void Mainwin::on_save_click()
         std::ostringstream oss;
         oss << "Unable to save file: untitled.mass\n" << e.what();
         Gtk::MessageDialog{*this, oss.str(), false, Gtk::MESSAGE_ERROR}.run();
+    }
+}
+
+void Mainwin::on_save_as_click() 
+{
+    Gtk::FileChooserDialog dialog("Please choose a file", Gtk::FileChooserAction::FILE_CHOOSER_ACTION_SAVE);
+    dialog.set_transient_for(*this);
+
+    auto filter_mass = Gtk::FileFilter::create();
+    filter_mass->set_name(EXT);
+    filter_mass->add_pattern("*."+EXT);
+    dialog.add_filter(filter_mass);
+
+    auto filter_any = Gtk::FileFilter::create();
+    filter_any->set_name("Any files");
+    filter_any->add_pattern("*");
+    dialog.add_filter(filter_any);
+
+    dialog.set_filename("untitled."+EXT);
+
+    //Add response buttons the the dialog:
+    dialog.add_button("_Cancel", 0);
+    dialog.add_button("_Save", 1);
+
+    int result = dialog.run();
+
+    if (result == 1) 
+    {
+        shelter->set_filename(dialog.get_filename());
+        on_save_click();
     }
 }
 
@@ -496,6 +610,23 @@ void Mainwin::on_list_adopted_click()
         status(osc.str());
     }
 
+}
+
+void Mainwin::on_about_click() {
+    Gtk::AboutDialog dialog{};
+    dialog.set_transient_for(*this); // Avoid the discouraging warning
+    dialog.set_program_name(TITLE);
+    auto logo = Gdk::Pixbuf::create_from_file("logo.png"); // logo licensed under Pixabay License, free for commercial use.
+    dialog.set_logo(logo);
+    dialog.set_version(VERSION);
+    dialog.set_copyright("Copyright 2019-2099");
+    dialog.set_license_type(Gtk::License::LICENSE_GPL_3_0);
+    std::vector< Glib::ustring > authors = {"Michael A. Bonnet", "with massive help from George F. Rice"};
+    dialog.set_authors(authors);
+    //std::vector< Glib::ustring > artists = {};
+    //dialog.set_artists(artists);
+    //dialog.set_comments("The two players alternate taking 1 to 3 sticks from the pile.\nThe goal is to force your opponent to take the last stick.\nIf the computer button is up, it's a two player game.\nIf down, the computer is always Player 2.");
+    dialog.run();
 }
 
 // /////////////////

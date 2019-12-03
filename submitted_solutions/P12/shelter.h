@@ -23,10 +23,14 @@ class Shelter
     Client& client(int index);
 
     void adopt(Client& client, Animal& animal);
+
+    void set_filename(std::string filename);
+    std::string get_filename();
   private:
     std::string _name;
     std::vector<Animal*> _available;
     std::vector<Client>  _clients;
+    std::string filename;
 };
 
 #endif

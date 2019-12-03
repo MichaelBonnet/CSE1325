@@ -21,6 +21,7 @@ Rabbit::Rabbit(std::istream& ist) : Animal(ist)
         }
     }
 }
+
 void Rabbit::save(std::ostream& ost) 
 {
     ost << "Rabbit\n";
